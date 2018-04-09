@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="pm2官方文档：http://pm2.keymetrics.io/docs/usage/quick-start/  简单教程首先需要安装pm2： 1npm install -g pm2 运行： 12pm2 start npm -- startpm2 start npm --name &quot;Your APP Name&quot; -- start 1pm2 start app.js 初次安装并运行，会有一个高大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pm2部署nodejs(zt)">
+<meta property="og:url" content="http://yoursite.com/2018/03/30/pm2部署nodejs(zt)/index.html">
+<meta property="og:site_name" content="VinceXie的博客">
+<meta property="og:description" content="pm2官方文档：http://pm2.keymetrics.io/docs/usage/quick-start/  简单教程首先需要安装pm2： 1npm install -g pm2 运行： 12pm2 start npm -- startpm2 start npm --name &quot;Your APP Name&quot; -- start 1pm2 start app.js 初次安装并运行，会有一个高大">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/31920-a87d9f022b1bad3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/556">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/31920-460416a1351fa20b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/632">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/31920-d9b61b829f16f467.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/31920-7d990f92952b28c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/464">
+<meta property="og:updated_time" content="2018-04-08T08:41:30.395Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pm2部署nodejs(zt)">
+<meta name="twitter:description" content="pm2官方文档：http://pm2.keymetrics.io/docs/usage/quick-start/  简单教程首先需要安装pm2： 1npm install -g pm2 运行： 12pm2 start npm -- startpm2 start npm --name &quot;Your APP Name&quot; -- start 1pm2 start app.js 初次安装并运行，会有一个高大">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/31920-a87d9f022b1bad3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/556">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/30/pm2部署nodejs(zt)/"/>
+
+
+
+
+
+  <title>pm2部署nodejs(zt) | VinceXie的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">VinceXie的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Why so serious</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/pm2部署nodejs(zt)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VinceXie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VinceXie的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pm2部署nodejs(zt)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T17:10:43+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>pm2官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start/</a></p>
+</blockquote>
+<h1 id="简单教程"><a href="#简单教程" class="headerlink" title="简单教程"></a>简单教程</h1><p>首先需要安装pm2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pm2 start npm -- start</span><br><span class="line">pm2 start npm --name <span class="string">"Your APP Name"</span> -- start</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
+<p>初次安装并运行，会有一个高大上的界面：</p>
+<p><img src="//upload-images.jianshu.io/upload_images/31920-a87d9f022b1bad3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/556" alt="img"></p>
+<p>高大上的界面</p>
+<p>直接我们介绍过<a href="https://www.jianshu.com/p/82a64aee0710" target="_blank" rel="noopener">forever</a>，那么pm2与forever相比较有哪些高大上的功能呢？我们看一下对比表格：</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Forever</th>
+<th>PM2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keep Alive</td>
+<td>✔</td>
+<td>✔</td>
+</tr>
+<tr>
+<td>Coffeescript</td>
+<td>✔</td>
+<td></td>
+</tr>
+<tr>
+<td>Log aggregation</td>
+<td></td>
+<td>✔</td>
+</tr>
+<tr>
+<td>API</td>
+<td></td>
+<td>✔</td>
+</tr>
+<tr>
+<td>Terminal monitoring</td>
+<td></td>
+<td>✔</td>
+</tr>
+<tr>
+<td>Clustering</td>
+<td></td>
+<td>✔</td>
+</tr>
+<tr>
+<td>JSON configuration</td>
+<td></td>
+<td>✔</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以很直观的看出，pm2相比较Forever，功能更加强大一些。</p>
+<h1 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h1><p>我们可以通过简单的命令查看应用的运行状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="//upload-images.jianshu.io/upload_images/31920-460416a1351fa20b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/632" alt="img"></p>
+<p>运行状态</p>
+<blockquote>
+<p>ANodeBlog应用正在运行，pid为31480，并且占用内存为89.113 MB。</p>
+</blockquote>
+<h2 id="追踪资源运行情况"><a href="#追踪资源运行情况" class="headerlink" title="追踪资源运行情况"></a>追踪资源运行情况</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
+<p>会看到应用资源的实时运行情况</p>
+<p><img src="//upload-images.jianshu.io/upload_images/31920-d9b61b829f16f467.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
+<p>实时运行情况</p>
+<h2 id="查看应用详细部署状态"><a href="#查看应用详细部署状态" class="headerlink" title="查看应用详细部署状态"></a>查看应用详细部署状态</h2><p>如果我们想要查看一个应用详细的运行状态，比如<code>ANodeBlog</code>的状态，可以运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe 3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>“3”是指App Id。</p>
+</blockquote>
+<p>结果如下：</p>
+<p><img src="//upload-images.jianshu.io/upload_images/31920-7d990f92952b28c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/464" alt="img"></p>
+<p>详细运行状态</p>
+<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
+<p>系统会打印出详细的logs。</p>
+<h1 id="重启应用"><a href="#重启应用" class="headerlink" title="重启应用"></a>重启应用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart appId</span><br></pre></td></tr></table></figure>
+<h1 id="停止应用"><a href="#停止应用" class="headerlink" title="停止应用"></a>停止应用</h1><p>想要终止应用，只需要运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop app.js</span><br></pre></td></tr></table></figure>
+<h1 id="强健的API"><a href="#强健的API" class="headerlink" title="强健的API"></a>强健的API</h1><p>在项目中运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
+<p>然后浏览器访问<a href="https://link.jianshu.com?t=http://localhost:9615" target="_blank" rel="noopener">http://localhost:9615</a> 你会有惊喜！</p>
+<h1 id="预定义运行配置文件"><a href="#预定义运行配置文件" class="headerlink" title="预定义运行配置文件"></a>预定义运行配置文件</h1><p>我们可以预定义一个配置文件，然后制定运行这个配置文件，比如我们定义一个文件<code>process.json</code>，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;apps&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;ANodeBlog&quot;,</span><br><span class="line">      &quot;script&quot;: &quot;bin/www&quot;,</span><br><span class="line">      &quot;watch&quot;: &quot;../&quot;,</span><br><span class="line">      &quot;log_date_format&quot;: &quot;YYYY-MM-DD HH:mm Z&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后可以通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start process.json</span><br></pre></td></tr></table></figure>
+<p>运行这个App。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>常用命令总结如下：</p>
+<ol>
+<li>安装pm2</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
+<ol>
+<li>启动应用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
+<ol>
+<li>列出所有应用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
+<ol>
+<li>查看资源消耗</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
+<ol>
+<li>查看某一个应用状态</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe [app id]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>查看所有日志</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
+<ol>
+<li>重启应用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart [app id]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>停止应用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop [app id]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>开启api访问</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
+<p>更多pm2内容请参考官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/30/Docker和软件部署Centos7指南/" rel="next" title="Docker和软件部署Centos7指南">
+                <i class="fa fa-chevron-left"></i> Docker和软件部署Centos7指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/08/以太坊私有链Docker部署/" rel="prev" title="以太坊私有链Docker部署">
+                以太坊私有链Docker部署 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">VinceXie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单教程"><span class="nav-number">1.</span> <span class="nav-text">简单教程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看运行状态"><span class="nav-number">2.</span> <span class="nav-text">查看运行状态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#追踪资源运行情况"><span class="nav-number">2.1.</span> <span class="nav-text">追踪资源运行情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看应用详细部署状态"><span class="nav-number">2.2.</span> <span class="nav-text">查看应用详细部署状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看日志"><span class="nav-number">3.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重启应用"><span class="nav-number">4.</span> <span class="nav-text">重启应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#停止应用"><span class="nav-number">5.</span> <span class="nav-text">停止应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#强健的API"><span class="nav-number">6.</span> <span class="nav-text">强健的API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预定义运行配置文件"><span class="nav-number">7.</span> <span class="nav-text">预定义运行配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VinceXie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

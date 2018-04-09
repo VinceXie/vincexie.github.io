@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="相关文件auth.js sign.js 前置123var session = require(&apos;express-session&apos;);var cookieParser = require(&apos;cookie-parser&apos;);app.use(cookieParser(config.session_secret)); Cookie中的connect.sid通过这个绑定connect.sid与req.se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Express Oauth登录流程">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/Express-Oauth登录流程/index.html">
+<meta property="og:site_name" content="VinceXie的博客">
+<meta property="og:description" content="相关文件auth.js sign.js 前置123var session = require(&apos;express-session&apos;);var cookieParser = require(&apos;cookie-parser&apos;);app.use(cookieParser(config.session_secret)); Cookie中的connect.sid通过这个绑定connect.sid与req.se">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fq6j9c5vwkj31ie0ok42b.jpg">
+<meta property="og:updated_time" content="2018-04-09T09:40:30.252Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Express Oauth登录流程">
+<meta name="twitter:description" content="相关文件auth.js sign.js 前置123var session = require(&apos;express-session&apos;);var cookieParser = require(&apos;cookie-parser&apos;);app.use(cookieParser(config.session_secret)); Cookie中的connect.sid通过这个绑定connect.sid与req.se">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1fq6j9c5vwkj31ie0ok42b.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/Express-Oauth登录流程/"/>
+
+
+
+
+
+  <title>Express Oauth登录流程 | VinceXie的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">VinceXie的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Why so serious</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/Express-Oauth登录流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="VinceXie">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="VinceXie的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Express Oauth登录流程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T16:59:50+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fq6j9c5vwkj31ie0ok42b.jpg" alt="截图"></p>
+<h3 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h3><p><a href="https://gitee.com/vincexie/server/blob/master/middlewares/auth.js" target="_blank" rel="noopener">auth.js</a></p>
+<p><a href="https://gitee.com/vincexie/server/blob/master/api/v1/sign.js" target="_blank" rel="noopener">sign.js</a></p>
+<h3 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line">app.use(cookieParser(config.session_secret));</span><br></pre></td></tr></table></figure>
+<h3 id="Cookie中的connect-sid"><a href="#Cookie中的connect-sid" class="headerlink" title="Cookie中的connect.sid"></a>Cookie中的connect.sid</h3><p>通过这个绑定connect.sid与req.session。重启服务器后只有connect.sid也不能认证通过，需要重新登录。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据cookie给req.session赋值</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<h3 id="验证用户是否登录"><a href="#验证用户是否登录" class="headerlink" title="验证用户是否登录"></a>验证用户是否登录</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(auth.authUser);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 验证用户是否登录，req.seesion有数据不操作，req.seesion没数据cookie有数据则查数据，</span></span><br><span class="line"><span class="comment"> * 都没有数据的话则下一步。</span></span><br><span class="line"><span class="comment"> * @param req</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> * @param next</span></span><br><span class="line"><span class="comment"> * @returns &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">exports.authUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> ep = <span class="keyword">new</span> eventproxy();</span><br><span class="line">	ep.fail(next);</span><br><span class="line">	res.locals.current_user = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 保证数据可用</span></span><br><span class="line">	ep.all(<span class="string">'get_user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"all"</span>)</span><br><span class="line">		res.locals.current_user = req.session.user = <span class="keyword">new</span> UserModel(user);</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 之前已登录，获取数据</span></span><br><span class="line">	<span class="keyword">if</span> (req.session.user) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(req.session.user)</span><br><span class="line">		ep.emit(<span class="string">'get_user'</span>, req.session.user);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 第一次获取数据，cookie有数据的在数据库查询</span></span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> auth_token = req.signedCookies[config.auth_cookie_name];</span><br><span class="line">		<span class="keyword">if</span> (!auth_token) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> auth = auth_token.split(<span class="string">'$$$$'</span>);</span><br><span class="line">		<span class="keyword">var</span> user_id = auth[<span class="number">0</span>];</span><br><span class="line">		UserProxy.getUserById(user_id, ep.done(<span class="string">'get_user'</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="登录授权中间件"><a href="#登录授权中间件" class="headerlink" title="登录授权中间件"></a>登录授权中间件</h3><p>部分需要授权的操作则加中间件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/user/:email'</span>,auth.userRequired,user.get)</span><br></pre></td></tr></table></figure>
+<p>根据上一步的验证决定是否放行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.userRequired = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!req.session || !req.session.user || !req.session.user._id) &#123;</span><br><span class="line">		<span class="keyword">return</span> res.status(<span class="number">403</span>).send(&#123;<span class="attr">error</span>:<span class="string">'forbidden!'</span>&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// console.log(req.session.user._id)</span></span><br><span class="line">	next();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h3 id="写入session"><a href="#写入session" class="headerlink" title="写入session"></a>写入session</h3><p>用于注册或登录后</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生成session</span></span><br><span class="line"><span class="comment"> * @param user</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">true</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="登录示例"><a href="#登录示例" class="headerlink" title="登录示例"></a>登录示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">exports.login = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> email = validator.trim(req.body.email).toLowerCase();</span><br><span class="line">	<span class="keyword">var</span> password      = validator.trim(req.body.password);</span><br><span class="line">	<span class="keyword">var</span> ep        = <span class="keyword">new</span> eventproxy();</span><br><span class="line"></span><br><span class="line">	ep.fail(next);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!email || !password) &#123;</span><br><span class="line">		res.status(<span class="number">422</span>);</span><br><span class="line">		<span class="keyword">return</span> res.send(&#123;<span class="attr">error</span>: <span class="string">'信息不完整。'</span> &#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> getUser = User.getUserByMail;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	ep.on(<span class="string">'login_error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">login_error</span>) </span>&#123;</span><br><span class="line">		res.status(<span class="number">403</span>);</span><br><span class="line">		res.send(&#123;<span class="attr">error</span>: <span class="string">'邮箱或密码错误'</span>&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	getUser(email, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="keyword">return</span> next(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> passhash = user.password;</span><br><span class="line">		tools.bcompare(password, passhash, ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (!bool) &#123;</span><br><span class="line">				<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			authMiddleWare.gen_session(user, res);</span><br><span class="line">			res.send(_.pick(user,<span class="string">'email'</span>,<span class="string">'balance'</span>));</span><br><span class="line">			<span class="comment">// store session cookie</span></span><br><span class="line">			<span class="comment">//authMiddleWare.gen_session(user, res);</span></span><br><span class="line"></span><br><span class="line">		&#125;));</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/08/以太坊私有链Docker部署/" rel="next" title="以太坊私有链Docker部署">
+                <i class="fa fa-chevron-left"></i> 以太坊私有链Docker部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">VinceXie</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关文件"><span class="nav-number">1.</span> <span class="nav-text">相关文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">2.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie中的connect-sid"><span class="nav-number">3.</span> <span class="nav-text">Cookie中的connect.sid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证用户是否登录"><span class="nav-number">4.</span> <span class="nav-text">验证用户是否登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录授权中间件"><span class="nav-number">5.</span> <span class="nav-text">登录授权中间件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入session"><span class="nav-number">6.</span> <span class="nav-text">写入session</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录示例"><span class="nav-number">7.</span> <span class="nav-text">登录示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">VinceXie</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
