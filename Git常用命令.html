@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot;">
+<meta name="description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Git常用命令">
 <meta property="og:url" content="http://yoursite.com/Git常用命令.html">
-<meta property="og:site_name" content="VinceXie的博客">
-<meta property="og:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot;">
+<meta property="og:site_name" content="谢志海的博客">
+<meta property="og:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T07:31:39.445Z">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
+<meta property="og:updated_time" content="2018-04-20T09:40:59.981Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git常用命令">
-<meta name="twitter:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot;">
+<meta name="twitter:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
+<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
 
 
 
@@ -97,7 +99,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -125,7 +127,7 @@
 
 
 
-  <title>Git常用命令 | VinceXie的博客</title>
+  <title>Git常用命令 | 谢志海的博客</title>
   
 
 
@@ -155,12 +157,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">VinceXie的博客</span>
+        <span class="site-title">谢志海的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">Why so serious</p>
+        <p class="site-subtitle">技术改变生活</p>
       
   </div>
 
@@ -186,6 +188,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
           </a>
         </li>
       
@@ -238,6 +250,15 @@
         
         
           <h3 id="忽略已经被提交的文件"><a href="#忽略已经被提交的文件" class="headerlink" title="忽略已经被提交的文件"></a><a href="https://segmentfault.com/q/1010000000430426" target="_blank" rel="noopener">忽略已经被提交的文件</a></h3><p>正确的做法应该是：<code>git rm --cached logs/xx.log</code>，然后更新 <code>.gitignore</code> 忽略掉目标文件，最后 <code>git commit -m &quot;We really don&#39;t want Git to track this anymore!&quot;</code></p>
+<h3 id="合并提交"><a href="#合并提交" class="headerlink" title="合并提交"></a>合并提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i 4287845</span><br></pre></td></tr></table></figure>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg" alt="1"></p>
+<ul>
+<li>不停选择用以前的提交来squash</li>
+<li>删掉旧分支</li>
+<li>相同名称命名新分支</li>
+<li>强制提交</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f origin master</span><br></pre></td></tr></table></figure>
 
         
       </div>
@@ -294,8 +315,12 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">VinceXie</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4"
+                alt="谢志海" />
+            
+              <p class="site-author-name" itemprop="name">谢志海</p>
+              <p class="site-description motion-element" itemprop="description">任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -305,7 +330,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -314,11 +339,36 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
 
           </nav>
 
           
 
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/VinceXie" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:274167515@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
           
 
           
@@ -342,7 +392,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略已经被提交的文件"><span class="nav-number">1.</span> <span class="nav-text">忽略已经被提交的文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略已经被提交的文件"><span class="nav-number">1.</span> <span class="nav-text">忽略已经被提交的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并提交"><span class="nav-number">2.</span> <span class="nav-text">合并提交</span></a></li></ol></div>
             
 
           </div>
@@ -366,7 +416,7 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">VinceXie</span>
+  <span class="author" itemprop="copyrightHolder">谢志海</span>
 
   
 </div>
@@ -380,7 +430,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -479,6 +529,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
