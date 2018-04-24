@@ -89,10 +89,10 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqntil6f51j316g05iwgb.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnuk7pzzrj318c05iwhd.jpg">
-<meta property="og:image" content="http://yoursite.com/Users/vincexie/Desktop/f%20d%20s.png">
-<meta property="og:image" content="http://yoursite.com/Users/vincexie/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-24%20%E4%B8%8B%E5%8D%884.59.21.png">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNc79gy1fqnvtnlxezj317e046tau.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvtta7f0j31kw0iiwvf.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvmr4wllj30w203ugmx.jpg">
-<meta property="og:updated_time" content="2018-04-24T09:35:41.729Z">
+<meta property="og:updated_time" content="2018-04-24T09:38:31.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以太坊研究4-极限性能测试">
 <meta name="twitter:description" content="前言上一篇文章测试了原有的5秒一区块3中心点测试链的极限性能。这次测试实时打包区块链的极限性能。 生成新的链测试前在社区问了一下相关问题，得到答案是区块链生成后不可以在原链更改生成时间，因此只能新建测试链进行测试。并且，可以设置生成时间为0，就是收到数据后会立刻打包，不用等时间到。 相关问题：https://ethereum.stackexchange.com/questions/46453/ho">
@@ -338,14 +338,14 @@
 <p>geth4、geth5</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnuk7pzzrj318c05iwhd.jpg" alt="geth4"></p>
 <p>geth6</p>
-<p><img src="/Users/vincexie/Desktop/f%20d%20s.png" alt="f d s"></p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fqnvtnlxezj317e046tau.jpg" alt="geth6"></p>
 <p><strong>出错分析</strong></p>
 <p>一开始就开始出错，因为采用实时挖矿，非轮流挖矿，如大量交易提交给区块链网络，geth4、geth5、geth6都会同时进行挖矿。我们geth5、geth6，都只跟geth4链接，当出现分叉时，geth6跟geth4都保留自己的链，而没有放弃自己的链。</p>
 <p><strong>解决方法</strong></p>
 <p>geth6与geth5也联通，当有两个节点都在1671时，自动放弃自己的分叉，跟上主链。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://b5de2120a829d201d65a7bb85804973590f818e3c0991d8499f2d47dd6c6a1e45786f9f04247bca0743f38f7006e48054146d6ab82156a6e03cb104f7630022e@127.0.0.1:30005?discport=0"</span>)</span><br></pre></td></tr></table></figure>
 <p>跟上主链</p>
-<p><img src="/Users/vincexie/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-24%20%E4%B8%8B%E5%8D%884.59.21.png" alt="屏幕快照 2018-04-24 下午4.59.21"></p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvtta7f0j31kw0iiwvf.jpg" alt="zhulian"></p>
 <h3 id="极限情况"><a href="#极限情况" class="headerlink" title="极限情况"></a>极限情况</h3><p>cpu使用</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvmr4wllj30w203ugmx.jpg" alt="321"></p>
 <h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>向一个节点提交交易的话，该节点会承担大部分的打包工作，打包极限为225/区块，其他节点该时的打包数约为75/节点。</p>
