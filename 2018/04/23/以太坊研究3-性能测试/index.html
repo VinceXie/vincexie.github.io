@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Vue," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时间处理以及显示。">
-<meta name="keywords" content="Vue">
+<meta name="description" content="前言研究私有链的各种性能瓶颈。 私有链如何挖矿？轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿 当挖矿成功时显示Successfully sealed new block。 这是一次挖矿周期的输出。 1234INFO [04-23|10:37:17] Successfully sealed new block            number=904567 hash=497">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue优秀插件">
-<meta property="og:url" content="http://yoursite.com/2018/04/16/vue优秀插件/index.html">
+<meta property="og:title" content="以太坊研究3-性能测试">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/以太坊研究3-性能测试/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时间处理以及显示。">
+<meta property="og:description" content="前言研究私有链的各种性能瓶颈。 私有链如何挖矿？轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿 当挖矿成功时显示Successfully sealed new block。 这是一次挖矿周期的输出。 1234INFO [04-23|10:37:17] Successfully sealed new block            number=904567 hash=497">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-20T10:04:55.484Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqms5pk1kdj31kw0co7og.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1fqmtel80ezj30yy05aabv.jpg">
+<meta property="og:updated_time" content="2018-04-24T08:06:17.542Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue优秀插件">
-<meta name="twitter:description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时间处理以及显示。">
+<meta name="twitter:title" content="以太坊研究3-性能测试">
+<meta name="twitter:description" content="前言研究私有链的各种性能瓶颈。 私有链如何挖矿？轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿 当挖矿成功时显示Successfully sealed new block。 这是一次挖矿周期的输出。 1234INFO [04-23|10:37:17] Successfully sealed new block            number=904567 hash=497">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1fqms5pk1kdj31kw0co7og.jpg">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/16/vue优秀插件/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/23/以太坊研究3-性能测试/"/>
 
 
 
 
 
-  <title>vue优秀插件 | 谢志海的博客</title>
+  <title>以太坊研究3-性能测试 | 谢志海的博客</title>
   
 
 
@@ -243,7 +245,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/vue优秀插件/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/以太坊研究3-性能测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -260,7 +262,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue优秀插件</h1>
+          <h1 class="post-title" itemprop="name headline">以太坊研究3-性能测试</h1>
         
 
         <div class="post-meta">
@@ -272,8 +274,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T15:40:56+08:00">
+                2018-04-23
               </time>
             
 
@@ -310,26 +312,27 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
-<ul>
-<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
-<p>整体的ui框架，可同时作用于手机端。</p>
-</li>
-</ul>
-<ul>
-<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
-<p>对cookie的操作。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
-<p>用来存放本地信息，可存放用户登录态。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
-<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
-</li>
-<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
-<p>用于时间处理以及显示。</p>
-</li>
-</ul>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>研究私有链的各种性能瓶颈。</p>
+<h4 id="私有链如何挖矿？"><a href="#私有链如何挖矿？" class="headerlink" title="私有链如何挖矿？"></a>私有链如何挖矿？</h4><p>轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿</p>
+<p>当挖矿成功时显示Successfully sealed new block。</p>
+<p>这是一次挖矿周期的输出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INFO [04-23|10:37:17] Successfully sealed new block            number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] 🔨 mined potential block                  number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] Commit new mining work                   number=904568 txs=0   uncles=0 elapsed=464.361µs</span><br><span class="line">INFO [04-23|10:37:17] Signed recently, must <span class="built_in">wait</span> <span class="keyword">for</span> others</span><br></pre></td></tr></table></figure>
+<h4 id="所需确认的块数"><a href="#所需确认的块数" class="headerlink" title="所需确认的块数"></a>所需确认的块数</h4><p>因为轮流打包，不可能出现孤块或叔父块，所以私有链只要一个区块打包了就可以确认交易，无需后续的多个块数确认。</p>
+<h4 id="最少中心点挖矿数"><a href="#最少中心点挖矿数" class="headerlink" title="最少中心点挖矿数"></a>最少中心点挖矿数</h4><p>3个。当少于3个时，挖矿不工作。</p>
+<h4 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h4><p>十万次交易测试代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Web3 = <span class="built_in">require</span>(<span class="string">'web3'</span>);</span><br><span class="line"><span class="keyword">var</span> web3 = <span class="keyword">new</span> Web3(<span class="string">"http://119.29.226.45:10001"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用while并发会出现堵塞，用递归控制并发</span></span><br><span class="line"><span class="keyword">var</span> sendTxRecur = <span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    web3.eth.sendTransaction(&#123;<span class="attr">from</span>:<span class="string">"0x5027bDa4349b1f0c415Af154A5e15a659d444B67"</span>, <span class="attr">to</span>:<span class="string">"0x810E626827eAFF977Fa1b00E19389220672aEB34"</span>, <span class="attr">value</span>:<span class="number">1</span>&#125;,<span class="function"><span class="keyword">function</span> (<span class="params">err,hash</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toISOString()+<span class="string">"-------"</span> + j)</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="built_in">console</span>.error(err)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(hash)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        i++;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">10000</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            sendTxRecur(i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//同时运行10个递归</span></span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>节点提交交易，一秒提交了190个交易</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqms5pk1kdj31kw0co7og.jpg" alt="fd"></p>
+<p>cpu使用情况</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqmtel80ezj30yy05aabv.jpg" alt="2"></p>
+<p>硬盘使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">私有链每天出产17280个块，每五秒一个块。现在链的总块数是225027，大约十三天的量。节点采用只拉头部的话数据链占用空间是93m，每天大概7m。全拉的话是111m，大概每天9m。因为块区基本都是空块，所以差别不大。如果块区有数据的话，差别会更大。</span><br></pre></td></tr></table></figure>
+<h4 id="打包交易数量"><a href="#打包交易数量" class="headerlink" title="打包交易数量"></a>打包交易数量</h4><p>单个区块最多容纳225个交易，以5秒为挖出一个区块的设置来计算。</p>
+<p>每秒可支持交易数量为45笔。</p>
+<h3 id="达到极限出错情况"><a href="#达到极限出错情况" class="headerlink" title="达到极限出错情况"></a>达到极限出错情况</h3><p>10:54:48 发送第一笔交易，到10:54:59 时总共发出1750笔交易，并成功返回哈希。11秒内区块链网络广播了1750笔交易后，发生了堵塞，后续交易的提交不成功。之后依然不停提交交易，直至10:55:28，中间间隔29秒，区块链恢复可提交交易状态。出错情况可复现。多次测试发现有时为1950笔交易堵塞，跟打包周期有关。</p>
+<p><strong>出错判断</strong></p>
+<p>1750/45 = 38。 头10秒提交的交易需要38秒来消化，总共消化40秒，中间停顿30秒，区块链网络当接受过量，即单个节点超过两个区块的数据量时停止接收交易。当存量交易被打包完毕时，恢复网络畅通。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>5秒一个区块的3中心节点网络每秒可交易数量为45，如网络中堵塞的还没打包交易数量超过1700时，网络可能发生不接受交易情况，但错误信息可捕捉，可后续继续提交交易。</p>
 
       
     </div>
@@ -345,12 +348,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Vue/" rel="tag"># Vue</a>
-          
-        </div>
-      
 
       
       
@@ -360,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/16/登录模块流程(2)-Vue前端/" rel="next" title="登录模块流程(2)-Vue前端">
-                <i class="fa fa-chevron-left"></i> 登录模块流程(2)-Vue前端
+              <a href="/2018/04/16/js时间处理/" rel="next" title="js时间处理">
+                <i class="fa fa-chevron-left"></i> js时间处理
               </a>
             
           </div>
@@ -370,8 +367,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/16/js时间处理/" rel="prev" title="js时间处理">
-                js时间处理 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/24/以太坊研究4-极限性能测试/" rel="prev" title="以太坊研究4-极限性能测试">
+                以太坊研究4-极限性能测试 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -540,7 +537,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#私有链如何挖矿？"><span class="nav-number">1.1.</span> <span class="nav-text">私有链如何挖矿？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所需确认的块数"><span class="nav-number">1.2.</span> <span class="nav-text">所需确认的块数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最少中心点挖矿数"><span class="nav-number">1.3.</span> <span class="nav-text">最少中心点挖矿数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试代码"><span class="nav-number">1.4.</span> <span class="nav-text">测试代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打包交易数量"><span class="nav-number">1.5.</span> <span class="nav-text">打包交易数量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#达到极限出错情况"><span class="nav-number">2.</span> <span class="nav-text">达到极限出错情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
 
           </div>

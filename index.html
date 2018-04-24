@@ -242,6 +242,300 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/以太坊研究4-极限性能测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/24/以太坊研究4-极限性能测试/" itemprop="url">以太坊研究4-极限性能测试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T14:41:52+08:00">
+                2018-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章测试了原有的5秒一区块3中心点测试链的极限性能。这次测试实时打包区块链的极限性能。</p>
+<h4 id="生成新的链"><a href="#生成新的链" class="headerlink" title="生成新的链"></a>生成新的链</h4><p>测试前在社区问了一下相关问题，得到答案是区块链生成后不可以在原链更改生成时间，因此只能新建测试链进行测试。并且，可以设置生成时间为0，就是收到数据后会立刻打包，不用等时间到。</p>
+<p>相关问题：<a href="https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain" target="_blank" rel="noopener">https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain</a></p>
+<p>genesis.json改周期，保存为genesis0.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"clique": &#123;</span><br><span class="line">      "period": 0,</span><br><span class="line">      "epoch": 30000</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>生成数据目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#geth --datadir /root/node0 init genesis.json</span></span><br><span class="line">docker run  --rm --net=host -v /root:/root ethereum/client-go --datadir /root/ethereum/node4 init /root/ethereum/genesis0.json</span><br></pre></td></tr></table></figure>
+<p>复制旧账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp ./node0/keystore/* ./node4/keystore</span><br><span class="line">cp ./node1/keystore/* ./node5/keystore</span><br><span class="line">cp ./node2/keystore/* ./node6/keystore</span><br></pre></td></tr></table></figure>
+<h4 id="启动新zero链"><a href="#启动新zero链" class="headerlink" title="启动新zero链"></a>启动新zero链</h4><p>旧链为geth1，geth2，geth3。新链为geth4。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth4  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10004 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node4 --port 30004 --nodiscover --unlock <span class="string">"0x5027bda4349b1f0c415af154a5e15a659d444b67,0x97F4FDB4b2393ba235a22b31e446e6DCd127d855,0x775e2741cDf53C0eAf1Cf46edEd6Ba9fc5D5791b"</span> --password /root/ethereum/password.txt --fast --cache=256 console</span><br></pre></td></tr></table></figure>
+<p>开启挖矿等待</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqntil6f51j316g05iwgb.jpg" alt="5"></p>
+<p>获取enode后继续开启geth5、geth6</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth5  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10005 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node5 --port 30005 --nodiscover --unlock 0xf867019806b730c7d338c92375bfb7560e0e6b59 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004 console</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth6  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10006 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node6 --port 30006 --nodiscover --unlock 0x00296b16cac6036f176b54a29853a6adbf67ee19 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes <span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span> console</span><br></pre></td></tr></table></figure>
+<p>节点连接失败，手动添加</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="测试开始"><a href="#测试开始" class="headerlink" title="测试开始"></a>测试开始</h3><h4 id="出错"><a href="#出错" class="headerlink" title="出错"></a>出错</h4><p>一开始就开始出错，geth4、5已经挖矿到1671，geth6停留在1090。</p>
+<p>geth4、geth5</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnuk7pzzrj318c05iwhd.jpg" alt="geth4"></p>
+<p>geth6</p>
+<p><img src="/Users/vincexie/Desktop/f%20d%20s.png" alt="f d s"></p>
+<p><strong>出错分析</strong></p>
+<p>一开始就开始出错，因为采用实时挖矿，非轮流挖矿，如大量交易提交给区块链网络，geth4、geth5、geth6都会同时进行挖矿。我们geth5、geth6，都只跟geth4链接，当出现分叉时，geth6跟geth4都保留自己的链，而没有放弃自己的链。</p>
+<p><strong>解决方法</strong></p>
+<p>geth6与geth5也联通，当有两个节点都在1671时，自动放弃自己的分叉，跟上主链。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://b5de2120a829d201d65a7bb85804973590f818e3c0991d8499f2d47dd6c6a1e45786f9f04247bca0743f38f7006e48054146d6ab82156a6e03cb104f7630022e@127.0.0.1:30005?discport=0"</span>)</span><br></pre></td></tr></table></figure>
+<p>跟上主链</p>
+<p><img src="/Users/vincexie/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-24%20%E4%B8%8B%E5%8D%884.59.21.png" alt="屏幕快照 2018-04-24 下午4.59.21"></p>
+<h3 id="极限情况"><a href="#极限情况" class="headerlink" title="极限情况"></a>极限情况</h3><p>cpu使用</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvmr4wllj30w203ugmx.jpg" alt="321"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>向一个节点提交交易的话，该节点会承担大部分的打包工作，打包极限为225/区块，其他节点该时的打包数约为75/节点。</p>
+<p>从09:02:34开始发送第一笔交易，发送到4314笔时产生堵塞，时间为09:03:05。到09:03:13时恢复交易。通过计算可得出</p>
+<p><strong>3中心的实时链向同一节点发送交易，交易计算峰值为140笔/秒，平均峰值为110笔/秒，如分散提交交易峰值可更高。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/以太坊研究3-性能测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/23/以太坊研究3-性能测试/" itemprop="url">以太坊研究3-性能测试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T15:40:56+08:00">
+                2018-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>研究私有链的各种性能瓶颈。</p>
+<h4 id="私有链如何挖矿？"><a href="#私有链如何挖矿？" class="headerlink" title="私有链如何挖矿？"></a>私有链如何挖矿？</h4><p>轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿</p>
+<p>当挖矿成功时显示Successfully sealed new block。</p>
+<p>这是一次挖矿周期的输出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INFO [04-23|10:37:17] Successfully sealed new block            number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] 🔨 mined potential block                  number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] Commit new mining work                   number=904568 txs=0   uncles=0 elapsed=464.361µs</span><br><span class="line">INFO [04-23|10:37:17] Signed recently, must <span class="built_in">wait</span> <span class="keyword">for</span> others</span><br></pre></td></tr></table></figure>
+<h4 id="所需确认的块数"><a href="#所需确认的块数" class="headerlink" title="所需确认的块数"></a>所需确认的块数</h4><p>因为轮流打包，不可能出现孤块或叔父块，所以私有链只要一个区块打包了就可以确认交易，无需后续的多个块数确认。</p>
+<h4 id="最少中心点挖矿数"><a href="#最少中心点挖矿数" class="headerlink" title="最少中心点挖矿数"></a>最少中心点挖矿数</h4><p>3个。当少于3个时，挖矿不工作。</p>
+<h4 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h4><p>十万次交易测试代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Web3 = <span class="built_in">require</span>(<span class="string">'web3'</span>);</span><br><span class="line"><span class="keyword">var</span> web3 = <span class="keyword">new</span> Web3(<span class="string">"http://119.29.226.45:10001"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用while并发会出现堵塞，用递归控制并发</span></span><br><span class="line"><span class="keyword">var</span> sendTxRecur = <span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    web3.eth.sendTransaction(&#123;<span class="attr">from</span>:<span class="string">"0x5027bDa4349b1f0c415Af154A5e15a659d444B67"</span>, <span class="attr">to</span>:<span class="string">"0x810E626827eAFF977Fa1b00E19389220672aEB34"</span>, <span class="attr">value</span>:<span class="number">1</span>&#125;,<span class="function"><span class="keyword">function</span> (<span class="params">err,hash</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toISOString()+<span class="string">"-------"</span> + j)</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="built_in">console</span>.error(err)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(hash)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        i++;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">10000</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            sendTxRecur(i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//同时运行10个递归</span></span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>节点提交交易，一秒提交了190个交易</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqms5pk1kdj31kw0co7og.jpg" alt="fd"></p>
+<p>cpu使用情况</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqmtel80ezj30yy05aabv.jpg" alt="2"></p>
+<p>硬盘使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">私有链每天出产17280个块，每五秒一个块。现在链的总块数是225027，大约十三天的量。节点采用只拉头部的话数据链占用空间是93m，每天大概7m。全拉的话是111m，大概每天9m。因为块区基本都是空块，所以差别不大。如果块区有数据的话，差别会更大。</span><br></pre></td></tr></table></figure>
+<h4 id="打包交易数量"><a href="#打包交易数量" class="headerlink" title="打包交易数量"></a>打包交易数量</h4><p>单个区块最多容纳225个交易，以5秒为挖出一个区块的设置来计算。</p>
+<p>每秒可支持交易数量为45笔。</p>
+<h3 id="达到极限出错情况"><a href="#达到极限出错情况" class="headerlink" title="达到极限出错情况"></a>达到极限出错情况</h3><p>10:54:48 发送第一笔交易，到10:54:59 时总共发出1750笔交易，并成功返回哈希。11秒内区块链网络广播了1750笔交易后，发生了堵塞，后续交易的提交不成功。之后依然不停提交交易，直至10:55:28，中间间隔29秒，区块链恢复可提交交易状态。出错情况可复现。多次测试发现有时为1950笔交易堵塞，跟打包周期有关。</p>
+<p><strong>出错判断</strong></p>
+<p>1750/45 = 38。 头10秒提交的交易需要38秒来消化，总共消化40秒，中间停顿30秒，区块链网络当接受过量，即单个节点超过两个区块的数据量时停止接收交易。当存量交易被打包完毕时，恢复网络畅通。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>5秒一个区块的3中心节点网络每秒可交易数量为45，如网络中堵塞的还没打包交易数量超过1700时，网络可能发生不接受交易情况，但错误信息可捕捉，可后续继续提交交易。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/js时间处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -358,281 +652,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/vue优秀插件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/vue优秀插件/" itemprop="url">vue优秀插件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
-                2018-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
-<ul>
-<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
-<p>整体的ui框架，可同时作用于手机端。</p>
-</li>
-</ul>
-<ul>
-<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
-<p>对cookie的操作。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
-<p>用来存放本地信息，可存放用户登录态。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
-<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
-</li>
-<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
-<p>用于时间处理以及显示。</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/登录模块流程(2)-Vue前端/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/登录模块流程(2)-Vue前端/" itemprop="url">登录模块流程(2)-Vue前端</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:44:19+08:00">
-                2018-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。</p>
-<p><strong>通过请求删除cookie更安全</strong></p>
-<h3 id="服务端httpOnly设置"><a href="#服务端httpOnly设置" class="headerlink" title="服务端httpOnly设置"></a>服务端httpOnly设置</h3><p>app.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        httpOnly:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<p>middlewares/auth.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">false</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用vue-session和vue-cookie"><a href="#使用vue-session和vue-cookie" class="headerlink" title="使用vue-session和vue-cookie"></a>使用vue-session和vue-cookie</h3><p>使用vue-session记录信息和vue-cookie删除cookie</p>
-<p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-session官方文档</a></p>
-<p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie官方文档</a></p>
-<h4 id="检查登录"><a href="#检查登录" class="headerlink" title="检查登录"></a>检查登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkLogin()&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.$session.get(<span class="string">'user'</span>))&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = <span class="keyword">this</span>.$session.get(<span class="string">'user'</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<h4 id="登录或注册成功后"><a href="#登录或注册成功后" class="headerlink" title="登录或注册成功后"></a>登录或注册成功后</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that.$session.set(<span class="string">'user'</span>,res.body)</span><br></pre></td></tr></table></figure>
-<h4 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">logout ()&#123;</span><br><span class="line">  <span class="keyword">this</span>.$session.destroy();</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'server'</span>);</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'connect.sid'</span>);</span><br><span class="line">  <span class="keyword">this</span>.checkLogin();</span><br><span class="line">  <span class="keyword">this</span>.$notify(&#123;</span><br><span class="line">    type: <span class="string">'success'</span>,</span><br><span class="line">    title: <span class="string">'已经退出'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -682,7 +706,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

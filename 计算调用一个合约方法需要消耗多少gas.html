@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="https://bitshuo.com/topic/58cb86e80a3de8932e6f7591 准备工作1、三个账户，eth.account[0]为默认账户,挖矿所得的奖励都会进入到这个账户 123456&amp;gt; eth.getBalance(eth.accounts[0])736031150000000000000&amp;gt; eth.getBalance(eth.accounts[1])50">
+<meta property="og:type" content="website">
+<meta property="og:title" content="谢志海的博客">
+<meta property="og:url" content="http://yoursite.com/计算调用一个合约方法需要消耗多少gas.html">
+<meta property="og:site_name" content="谢志海的博客">
+<meta property="og:description" content="https://bitshuo.com/topic/58cb86e80a3de8932e6f7591 准备工作1、三个账户，eth.account[0]为默认账户,挖矿所得的奖励都会进入到这个账户 123456&amp;gt; eth.getBalance(eth.accounts[0])736031150000000000000&amp;gt; eth.getBalance(eth.accounts[1])50">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-23T08:17:42.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谢志海的博客">
+<meta name="twitter:description" content="https://bitshuo.com/topic/58cb86e80a3de8932e6f7591 准备工作1、三个账户，eth.account[0]为默认账户,挖矿所得的奖励都会进入到这个账户 123456&amp;gt; eth.getBalance(eth.accounts[0])736031150000000000000&amp;gt; eth.getBalance(eth.accounts[1])50">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/计算调用一个合约方法需要消耗多少gas.html"/>
+
+
+
+
+
+  <title> | 谢志海的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">谢志海的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术改变生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline"></h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p><a href="https://bitshuo.com/topic/58cb86e80a3de8932e6f7591" target="_blank" rel="noopener">https://bitshuo.com/topic/58cb86e80a3de8932e6f7591</a></p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>1、三个账户，<code>eth.account[0]</code>为默认账户,挖矿所得的奖励都会进入到这个账户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.getBalance(eth.accounts[0])</span><br><span class="line">736031150000000000000</span><br><span class="line">&gt; eth.getBalance(eth.accounts[1])</span><br><span class="line">500050000000000000</span><br><span class="line">&gt; eth.getBalance(eth.accounts[2])</span><br><span class="line">500050000000000000</span><br></pre></td></tr></table></figure>
+<h3 id="普通交易所需的gas"><a href="#普通交易所需的gas" class="headerlink" title="普通交易所需的gas"></a>普通交易所需的gas</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.estimateGas(&#123;from:eth.accounts[1], to: eth.accounts[2], value:50000000000000&#125;)</span><br><span class="line">21001</span><br><span class="line">&gt; eth.gasPrice</span><br><span class="line">20000000000</span><br></pre></td></tr></table></figure>
+<p>如上，显示这笔account[1] =&gt; account[2] 的交易需要21001 gas, 当前的gasPrice为 20000000000，下面来<strong>验证一下</strong>给账户1解锁，发送这笔交易，并开启挖矿打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.sendTransaction(&#123;from:eth.accounts[1], to: eth.accounts[2], value:50000000000000&#125;)</span><br><span class="line">I0318 00:24:21.360815 internal/ethapi/api.go:1143] Tx(0x33b58084a35e99245b9c931204a0d161b9d00f9fae5ffb307aff29f200e5cd30) to: 0x49fbd70ca9f90972806c375a111d08950d203f96</span><br><span class="line">&quot;0x33b58084a35e99245b9c931204a0d161b9d00f9fae5ffb307aff29f200e5cd30&quot;</span><br></pre></td></tr></table></figure>
+<p>待交易被打包后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.getBalance(eth.accounts[1])</span><br><span class="line">499580000000000000</span><br><span class="line">&gt; eth.getBalance(eth.accounts[2])</span><br><span class="line">500100000000000000</span><br></pre></td></tr></table></figure>
+<p>由 <code>cost = gas * gasPrice</code> ,   （ 账户1减少的资产 -  账户2增加的资产）/ gasPrice   =  消耗的gas，即以下公式应该是成立的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(500050000000000000 - 499580000000000000) - (500100000000000000 - 500050000000000000) = 21001 * 20000000000</span><br></pre></td></tr></table></figure>
+<p><strong>然而</strong> 细心的同学应该会发现，这个公式并不能成功，<code>21001</code> 这个数字怎么看怎么别扭，如果减1 这个公式就成功了！！！继续查看这笔交易的明细</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.getTransactionReceipt(&quot;0x33b58084a35e99245b9c931204a0d161b9d00f9fae5ffb307aff29f200e5cd30&quot;)</span><br><span class="line">&#123;</span><br><span class="line">  blockHash: &quot;0x8e411163367bc42a70ecc230d05dd2038afe0dccfab29c8a718a57bdbea0b2fa&quot;,</span><br><span class="line">  blockNumber: 134,</span><br><span class="line">  contractAddress: null,</span><br><span class="line">  cumulativeGasUsed: 21000,</span><br><span class="line">  from: &quot;0x27c649b7c4f66cfaedb99d6b38527db4deda6f41&quot;,</span><br><span class="line">  gasUsed: 21000,</span><br><span class="line">  logs: [],</span><br><span class="line">  logsBloom: &quot;0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;,</span><br><span class="line">  root: &quot;0x2008f134f3328e48d4d05919666a5924767b00b286cf1ff27b7956654d5b6482&quot;,</span><br><span class="line">  to: &quot;0x49fbd70ca9f90972806c375a111d08950d203f96&quot;,</span><br><span class="line">  transactionHash: &quot;0x33b58084a35e99245b9c931204a0d161b9d00f9fae5ffb307aff29f200e5cd30&quot;,</span><br><span class="line">  transactionIndex: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>gasUsed: 21000</code>  这就对上了，那么为什么<code>eth.estimateGas()</code> 计算的结果要多1 呢？这是有原因滴，如果计算出来的值和gasUsed相等，那这笔交易有可能是失败的，但是如果 gasUsed 小于计算出来的值，那么可以判断这笔交易成功了</p>
+<h3 id="调用合约方法所需要的gas"><a href="#调用合约方法所需要的gas" class="headerlink" title="调用合约方法所需要的gas"></a>调用合约方法所需要的gas</h3><p>普通的转账交易所需要的gas是固定的21000，但是调用合约方法所需要的gas并不一定，总结来说占用的资源（计算量、内存等）越多，那么所需要的gas也就越多。先准备一个最简单的合约</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pragma solidity ^0.4.8;</span><br><span class="line">contract Test &#123;</span><br><span class="line">   uint public num;</span><br><span class="line">   </span><br><span class="line">   function setNum(uint newNum) &#123;</span><br><span class="line">       num = newNum;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部署到私有链，这个过程就不再演示，最后合约实例<code>testInstance</code>。再看看eth.accounts[1] 和 eth.accounts[2] 的资产信息，方面后面计算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.getBalance(eth.accounts[1])</span><br><span class="line">499580000000000000</span><br><span class="line">&gt; eth.getBalance(eth.accounts[2])</span><br><span class="line">500100000000000000</span><br></pre></td></tr></table></figure>
+<p>计算调用合约方法<code>setNum()</code> 所需要的gas</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; testInstance.setNum.estimateGas(4, &#123;from: eth.accounts[1]&#125;)</span><br><span class="line">41645</span><br></pre></td></tr></table></figure>
+<p>开始调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; testInstance.setNum.sendTransaction(4, &#123;from: eth.accounts[1]&#125;)</span><br><span class="line">I0318 07:21:31.344279 internal/ethapi/api.go:1143] Tx(0x3fad05f17f7904e08dcb9257ad28f85f29bd54c4729784fa39a9df88e3fcffab) to: 0x03a4fb357f8c38694ab536d09003076033442f9e</span><br><span class="line">&quot;0x3fad05f17f7904e08dcb9257ad28f85f29bd54c4729784fa39a9df88e3fcffab&quot;</span><br></pre></td></tr></table></figure>
+<p>开启挖矿，让这笔交易被打包之后，再来查看下gasUsed 跟上面计算出来的数字是否吻合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt; eth.getTransactionReceipt(&apos;0x3fad05f17f7904e08dcb9257ad28f85f29bd54c4729784fa39a9df88e3fcffab&apos;)</span><br><span class="line">&#123;</span><br><span class="line">  blockHash: &quot;0x494f5f6fc0c156f105ffe3e4e1aa886c60f916a5998d44a03916b3f2cc733b8a&quot;,</span><br><span class="line">  blockNumber: 139,</span><br><span class="line">  contractAddress: null,</span><br><span class="line">  cumulativeGasUsed: 41644,</span><br><span class="line">  from: &quot;0x27c649b7c4f66cfaedb99d6b38527db4deda6f41&quot;,</span><br><span class="line">  gasUsed: 41644,</span><br><span class="line">  logs: [],</span><br><span class="line">  logsBloom: &quot;0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000&quot;,</span><br><span class="line">  root: &quot;0x857063e074cc3195ee2f3962438f3f6c31a759cfae461448e8726a5fa069d1ae&quot;,</span><br><span class="line">  to: &quot;0x03a4fb357f8c38694ab536d09003076033442f9e&quot;,</span><br><span class="line">  transactionHash: &quot;0x3fad05f17f7904e08dcb9257ad28f85f29bd54c4729784fa39a9df88e3fcffab&quot;,</span><br><span class="line">  transactionIndex: 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>gasUsed:41644</code> 比计算出来的少1，原因上面已经讲过了，这里不赘述！</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4"
+                alt="谢志海" />
+            
+              <p class="site-author-name" itemprop="name">谢志海</p>
+              <p class="site-description motion-element" itemprop="description">任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+                    		<div class="category-all">
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		</div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/VinceXie" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:274167515@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=274167515&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i></a>
+                  </span>
+                
+            </div>
+          
+
+
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://web3js.readthedocs.io/en/1.0/index.html" title="以太坊web3.js" target="_blank">以太坊web3.js</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#普通交易所需的gas"><span class="nav-number">2.</span> <span class="nav-text">普通交易所需的gas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用合约方法所需要的gas"><span class="nav-number">3.</span> <span class="nav-text">调用合约方法所需要的gas</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢志海</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

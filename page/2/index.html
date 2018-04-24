@@ -242,6 +242,276 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/vue优秀插件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/vue优秀插件/" itemprop="url">vue优秀插件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
+<ul>
+<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
+<p>整体的ui框架，可同时作用于手机端。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
+<p>对cookie的操作。</p>
+</li>
+<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
+<p>用来存放本地信息，可存放用户登录态。</p>
+</li>
+<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
+<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
+</li>
+<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
+<p>用于时间处理以及显示。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/登录模块流程(2)-Vue前端/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/登录模块流程(2)-Vue前端/" itemprop="url">登录模块流程(2)-Vue前端</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:44:19+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。</p>
+<p><strong>通过请求删除cookie更安全</strong></p>
+<h3 id="服务端httpOnly设置"><a href="#服务端httpOnly设置" class="headerlink" title="服务端httpOnly设置"></a>服务端httpOnly设置</h3><p>app.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        httpOnly:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>middlewares/auth.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">false</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用vue-session和vue-cookie"><a href="#使用vue-session和vue-cookie" class="headerlink" title="使用vue-session和vue-cookie"></a>使用vue-session和vue-cookie</h3><p>使用vue-session记录信息和vue-cookie删除cookie</p>
+<p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-session官方文档</a></p>
+<p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie官方文档</a></p>
+<h4 id="检查登录"><a href="#检查登录" class="headerlink" title="检查登录"></a>检查登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkLogin()&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.$session.get(<span class="string">'user'</span>))&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = <span class="keyword">this</span>.$session.get(<span class="string">'user'</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h4 id="登录或注册成功后"><a href="#登录或注册成功后" class="headerlink" title="登录或注册成功后"></a>登录或注册成功后</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that.$session.set(<span class="string">'user'</span>,res.body)</span><br></pre></td></tr></table></figure>
+<h4 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">logout ()&#123;</span><br><span class="line">  <span class="keyword">this</span>.$session.destroy();</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'server'</span>);</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'connect.sid'</span>);</span><br><span class="line">  <span class="keyword">this</span>.checkLogin();</span><br><span class="line">  <span class="keyword">this</span>.$notify(&#123;</span><br><span class="line">    type: <span class="string">'success'</span>,</span><br><span class="line">    title: <span class="string">'已经退出'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/登录模块流程(1)-Express后端/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,397 +636,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/pm2部署nodejs(zt)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/pm2部署nodejs(zt)/" itemprop="url">pm2部署nodejs(zt)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T17:10:43+08:00">
-                2018-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>pm2官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start/</a></p>
-</blockquote>
-<h1 id="简单教程"><a href="#简单教程" class="headerlink" title="简单教程"></a>简单教程</h1><p>首先需要安装pm2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-<p>运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pm2 start npm -- start</span><br><span class="line">pm2 start npm --name <span class="string">"Your APP Name"</span> -- start</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
-<p>初次安装并运行，会有一个高大上的界面：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-a87d9f022b1bad3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/556" alt="img"></p>
-<p>高大上的界面</p>
-<p>直接我们介绍过<a href="https://www.jianshu.com/p/82a64aee0710" target="_blank" rel="noopener">forever</a>，那么pm2与forever相比较有哪些高大上的功能呢？我们看一下对比表格：</p>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Forever</th>
-<th>PM2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Keep Alive</td>
-<td>✔</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Coffeescript</td>
-<td>✔</td>
-<td></td>
-</tr>
-<tr>
-<td>Log aggregation</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>API</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Terminal monitoring</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Clustering</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>JSON configuration</td>
-<td></td>
-<td>✔</td>
-</tr>
-</tbody>
-</table>
-<p>我们可以很直观的看出，pm2相比较Forever，功能更加强大一些。</p>
-<h1 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h1><p>我们可以通过简单的命令查看应用的运行状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
-<p>效果如下：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-460416a1351fa20b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/632" alt="img"></p>
-<p>运行状态</p>
-<blockquote>
-<p>ANodeBlog应用正在运行，pid为31480，并且占用内存为89.113 MB。</p>
-</blockquote>
-<h2 id="追踪资源运行情况"><a href="#追踪资源运行情况" class="headerlink" title="追踪资源运行情况"></a>追踪资源运行情况</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
-<p>会看到应用资源的实时运行情况</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-d9b61b829f16f467.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>实时运行情况</p>
-<h2 id="查看应用详细部署状态"><a href="#查看应用详细部署状态" class="headerlink" title="查看应用详细部署状态"></a>查看应用详细部署状态</h2><p>如果我们想要查看一个应用详细的运行状态，比如<code>ANodeBlog</code>的状态，可以运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe 3</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>“3”是指App Id。</p>
-</blockquote>
-<p>结果如下：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-7d990f92952b28c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/464" alt="img"></p>
-<p>详细运行状态</p>
-<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
-<p>系统会打印出详细的logs。</p>
-<h1 id="重启应用"><a href="#重启应用" class="headerlink" title="重启应用"></a>重启应用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart appId</span><br></pre></td></tr></table></figure>
-<h1 id="停止应用"><a href="#停止应用" class="headerlink" title="停止应用"></a>停止应用</h1><p>想要终止应用，只需要运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop app.js</span><br></pre></td></tr></table></figure>
-<h1 id="强健的API"><a href="#强健的API" class="headerlink" title="强健的API"></a>强健的API</h1><p>在项目中运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
-<p>然后浏览器访问<a href="https://link.jianshu.com?t=http://localhost:9615" target="_blank" rel="noopener">http://localhost:9615</a> 你会有惊喜！</p>
-<h1 id="预定义运行配置文件"><a href="#预定义运行配置文件" class="headerlink" title="预定义运行配置文件"></a>预定义运行配置文件</h1><p>我们可以预定义一个配置文件，然后制定运行这个配置文件，比如我们定义一个文件<code>process.json</code>，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;apps&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;ANodeBlog&quot;,</span><br><span class="line">      &quot;script&quot;: &quot;bin/www&quot;,</span><br><span class="line">      &quot;watch&quot;: &quot;../&quot;,</span><br><span class="line">      &quot;log_date_format&quot;: &quot;YYYY-MM-DD HH:mm Z&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后可以通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start process.json</span><br></pre></td></tr></table></figure>
-<p>运行这个App。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>常用命令总结如下：</p>
-<ol>
-<li>安装pm2</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-<ol>
-<li>启动应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
-<ol>
-<li>列出所有应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看资源消耗</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看某一个应用状态</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看所有日志</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
-<ol>
-<li>重启应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>停止应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>开启api访问</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
-<p>更多pm2内容请参考官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Docker和软件部署Centos7指南/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/Docker和软件部署Centos7指南/" itemprop="url">Docker和软件部署Centos7指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T11:18:41+08:00">
-                2018-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
-<h2 id="Nodejs安装"><a href="#Nodejs安装" class="headerlink" title="Nodejs安装"></a>Nodejs安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install nodejs</span><br><span class="line">sudo yum -y install node-gyp</span><br><span class="line"><span class="built_in">alias</span> cnpm=<span class="string">"npm --registry=https://registry.npm.taobao.org \</span></span><br><span class="line"><span class="string">--cache=<span class="variable">$HOME</span>/.npm/.cache/cnpm \</span></span><br><span class="line"><span class="string">--disturl=https://npm.taobao.org/dist \</span></span><br><span class="line"><span class="string">--userconfig=<span class="variable">$HOME</span>/.cnpmrc"</span></span><br><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-<h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h2><p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install docker</span><br></pre></td></tr></table></figure>
-<p>启动并设置开机启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker start</span><br><span class="line">sudo chkconfig docker on</span><br></pre></td></tr></table></figure>
-<p>设置网易节点</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="built_in">echo</span> <span class="string">"DOCKER_OPTS=\"\$DOCKER_OPTS --registry-mirror=http://hub-mirror.c.163.com\""</span> &gt;&gt; /etc/default/docker</span><br><span class="line">$ service docker restart</span><br></pre></td></tr></table></figure>
-<h2 id="portainer部署"><a href="#portainer部署" class="headerlink" title="portainer部署"></a>portainer部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker volume create portainer_data</span><br><span class="line">$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</span><br></pre></td></tr></table></figure>
-<h2 id="不用密码可先部署安全组遮蔽端口"><a href="#不用密码可先部署安全组遮蔽端口" class="headerlink" title="不用密码可先部署安全组遮蔽端口"></a>不用密码可先部署安全组遮蔽端口</h2><p><a href="https://cloud.tencent.com/document/product/213/12452" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/213/12452</a></p>
-<h2 id="mongo部署"><a href="#mongo部署" class="headerlink" title="mongo部署"></a>mongo部署</h2><p><a href="https://hub.docker.com/_/mongo/" target="_blank" rel="noopener">官方镜像</a></p>
-<p>安装并启动mongo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br><span class="line">docker run -p 27017:27017 --restart=always --name mymongo -d -v /root/data/db:/data/db mongo</span><br><span class="line"><span class="comment">### osx</span></span><br><span class="line">docker run -p 27017:27017 --restart=always --name mymongo -d -v ~/data/db:/data/db mongo</span><br></pre></td></tr></table></figure>
-<p>添加密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mymongo mongo admin</span><br><span class="line">connecting to: admin</span><br><span class="line">&gt; db.createUser(&#123; user: &apos;root&apos;, pwd: &apos;xxxxxxxx&apos;, roles: [ &#123; role: &quot;root&quot;, db: &quot;admin&quot; &#125; ] &#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="redis部署"><a href="#redis部署" class="headerlink" title="redis部署"></a>redis部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis</span><br><span class="line">docker run --name myredis -d -p 6379:6379 --restart=always redis</span><br></pre></td></tr></table></figure>
-<h2 id="mysql部署"><a href="#mysql部署" class="headerlink" title="mysql部署"></a>mysql部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br><span class="line">docker run --name mymysql -e MYSQL_ROOT_PASSWORD=123456 -v /root/data/mysql:/var/lib/mysql -d --restart=always  mysql</span><br></pre></td></tr></table></figure>
-<h2 id="nginx部署"><a href="#nginx部署" class="headerlink" title="nginx部署"></a>nginx部署</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">scp -r  ./nginx.conf  root@somehk.com:/root/data</span><br><span class="line"><span class="comment"># 新版本</span></span><br><span class="line">docker run --name mynginx -v /root/server/nginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --net=host --restart=always nginx</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -806,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
