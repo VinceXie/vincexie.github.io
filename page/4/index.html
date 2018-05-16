@@ -242,6 +242,316 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Docker和软件部署Centos7指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/Docker和软件部署Centos7指南/" itemprop="url">Docker和软件部署Centos7指南</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T11:18:41+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Git安装"><a href="#Git安装" class="headerlink" title="Git安装"></a>Git安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y git</span><br></pre></td></tr></table></figure>
+<h2 id="Nodejs安装"><a href="#Nodejs安装" class="headerlink" title="Nodejs安装"></a>Nodejs安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo yum -y install nodejs</span><br><span class="line">sudo yum -y install node-gyp</span><br><span class="line"><span class="built_in">alias</span> cnpm=<span class="string">"npm --registry=https://registry.npm.taobao.org \</span></span><br><span class="line"><span class="string">--cache=<span class="variable">$HOME</span>/.npm/.cache/cnpm \</span></span><br><span class="line"><span class="string">--disturl=https://npm.taobao.org/dist \</span></span><br><span class="line"><span class="string">--userconfig=<span class="variable">$HOME</span>/.cnpmrc"</span></span><br><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
+<h2 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h2><p>安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install docker</span><br></pre></td></tr></table></figure>
+<p>启动并设置开机启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker start</span><br><span class="line">sudo chkconfig docker on</span><br></pre></td></tr></table></figure>
+<p>设置网易节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="built_in">echo</span> <span class="string">"DOCKER_OPTS=\"\$DOCKER_OPTS --registry-mirror=http://hub-mirror.c.163.com\""</span> &gt;&gt; /etc/default/docker</span><br><span class="line">$ service docker restart</span><br></pre></td></tr></table></figure>
+<h2 id="portainer部署"><a href="#portainer部署" class="headerlink" title="portainer部署"></a>portainer部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker volume create portainer_data</span><br><span class="line">$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer</span><br></pre></td></tr></table></figure>
+<h2 id="不用密码可先部署安全组遮蔽端口"><a href="#不用密码可先部署安全组遮蔽端口" class="headerlink" title="不用密码可先部署安全组遮蔽端口"></a>不用密码可先部署安全组遮蔽端口</h2><p><a href="https://cloud.tencent.com/document/product/213/12452" target="_blank" rel="noopener">https://cloud.tencent.com/document/product/213/12452</a></p>
+<h2 id="mongo部署"><a href="#mongo部署" class="headerlink" title="mongo部署"></a>mongo部署</h2><p><a href="https://hub.docker.com/_/mongo/" target="_blank" rel="noopener">官方镜像</a></p>
+<p>安装并启动mongo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br><span class="line">docker run -p 27017:27017 --restart=always --name mymongo -d -v /root/data/db:/data/db mongo</span><br><span class="line"><span class="comment">### osx</span></span><br><span class="line">docker run -p 27017:27017 --restart=always --name mymongo -d -v ~/data/db:/data/db mongo</span><br></pre></td></tr></table></figure>
+<p>添加密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it mymongo mongo admin</span><br><span class="line">connecting to: admin</span><br><span class="line">&gt; db.createUser(&#123; user: &apos;root&apos;, pwd: &apos;xxxxxxxx&apos;, roles: [ &#123; role: &quot;root&quot;, db: &quot;admin&quot; &#125; ] &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="redis部署"><a href="#redis部署" class="headerlink" title="redis部署"></a>redis部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis</span><br><span class="line">docker run --name myredis -d -p 6379:6379 --restart=always redis</span><br></pre></td></tr></table></figure>
+<h2 id="mysql部署"><a href="#mysql部署" class="headerlink" title="mysql部署"></a>mysql部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql</span><br><span class="line">docker run --name mymysql -e MYSQL_ROOT_PASSWORD=123456 -v /root/data/mysql:/var/lib/mysql -d --restart=always  mysql</span><br></pre></td></tr></table></figure>
+<h2 id="nginx部署"><a href="#nginx部署" class="headerlink" title="nginx部署"></a>nginx部署</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">scp -r  ./nginx.conf  root@somehk.com:/root/data</span><br><span class="line"><span class="comment"># 新版本</span></span><br><span class="line">docker run --name mynginx -v /root/server/nginx.conf:/etc/nginx/nginx.conf:ro -d -p 80:80 --net=host --restart=always nginx</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/Dockerizing a Node.js web app(zt)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/30/Dockerizing a Node.js web app(zt)/" itemprop="url">Dockerizing a Node.js web app(zt)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T11:08:44+08:00">
+                2018-03-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>The goal of this example is to show you how to get a Node.js application into a Docker container. The guide is intended for development, and <em>not</em> for a production deployment. The guide also assumes you have a working <a href="https://docs.docker.com/engine/installation/" target="_blank" rel="noopener">Docker installation</a> and a basic understanding of how a Node.js application is structured.</p>
+<p>In the first part of this guide we will create a simple web application in Node.js, then we will build a Docker image for that application, and lastly we will run the image as a container.</p>
+<p>Docker allows you to package an application with all of its dependencies into a standardized unit, called a container, for software development. A container is a stripped-to-basics version of a Linux operating system. An image is software you load into a container.</p>
+<h2 id="Create-the-Node-js-app"><a href="#Create-the-Node-js-app" class="headerlink" title="Create the Node.js app"></a>Create the Node.js app</h2><p>First, create a new directory where all the files would live. In this directory create a<code>package.json</code> file that describes your app and its dependencies:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;docker_web_app&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">  &quot;description&quot;: &quot;Node.js on Docker&quot;,</span><br><span class="line">  &quot;author&quot;: &quot;First Last &lt;first.last@example.com&gt;&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;server.js&quot;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;node server.js&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;express&quot;: &quot;^4.16.1&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>With your new <code>package.json</code> file, run <code>npm install</code>. If you are using <code>npm</code> version 5 or later, this will generate a <code>package-lock.json</code> file which will be copied to your Docker image.</p>
+<p>Then, create a <code>server.js</code> file that defines a web app using the <a href="https://expressjs.com/" target="_blank" rel="noopener">Express.js</a> framework:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&apos;use strict&apos;;</span><br><span class="line"></span><br><span class="line">const express = require(&apos;express&apos;);</span><br><span class="line"></span><br><span class="line">// Constants</span><br><span class="line">const PORT = 8080;</span><br><span class="line">const HOST = &apos;0.0.0.0&apos;;</span><br><span class="line"></span><br><span class="line">// App</span><br><span class="line">const app = express();</span><br><span class="line">app.get(&apos;/&apos;, (req, res) =&gt; &#123;</span><br><span class="line">  res.send(&apos;Hello world\n&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(PORT, HOST);</span><br><span class="line">console.log(`Running on http://$&#123;HOST&#125;:$&#123;PORT&#125;`);</span><br></pre></td></tr></table></figure>
+<p>In the next steps, we’ll look at how you can run this app inside a Docker container using the official Docker image. First, you’ll need to build a Docker image of your app.</p>
+<h2 id="Creating-a-Dockerfile"><a href="#Creating-a-Dockerfile" class="headerlink" title="Creating a Dockerfile"></a>Creating a Dockerfile</h2><p>Create an empty file called <code>Dockerfile</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch Dockerfile</span><br></pre></td></tr></table></figure>
+<p>Open the <code>Dockerfile</code> in your favorite text editor</p>
+<p>The first thing we need to do is define from what image we want to build from. Here we will use the latest LTS (long term support) version <code>carbon</code> of <code>node</code> available from the <a href="https://hub.docker.com/" target="_blank" rel="noopener">Docker Hub</a>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM node:carbon</span><br></pre></td></tr></table></figure>
+<p>Next we create a directory to hold the application code inside the image, this will be the working directory for your application:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Create app directory</span><br><span class="line">WORKDIR /usr/src/app</span><br></pre></td></tr></table></figure>
+<p>This image comes with Node.js and NPM already installed so the next thing we need to do is to install your app dependencies using the <code>npm</code> binary. Please note that if you are using<code>npm</code> version 4 or earlier a <code>package-lock.json</code> file will <em>not</em> be generated.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Install app dependencies</span><br><span class="line"># A wildcard is used to ensure both package.json AND package-lock.json are copied</span><br><span class="line"># where available (npm@5+)</span><br><span class="line">COPY package*.json ./</span><br><span class="line"></span><br><span class="line">RUN npm install</span><br><span class="line"># If you are building your code for production</span><br><span class="line"># RUN npm install --only=production</span><br></pre></td></tr></table></figure>
+<p>Note that, rather than copying the entire working directory, we are only copying the<code>package.json</code> file. This allows us to take advantage of cached Docker layers. bitJudo has a good explanation of this <a href="http://bitjudo.com/blog/2014/03/13/building-efficient-dockerfiles-node-dot-js/" target="_blank" rel="noopener">here</a>.</p>
+<p>To bundle your app’s source code inside the Docker image, use the <code>COPY</code> instruction:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Bundle app source</span><br><span class="line">COPY . .</span><br></pre></td></tr></table></figure>
+<p>Your app binds to port <code>8080</code> so you’ll use the <code>EXPOSE</code> instruction to have it mapped by the<code>docker</code> daemon:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPOSE 8080</span><br></pre></td></tr></table></figure>
+<p>Last but not least, define the command to run your app using <code>CMD</code> which defines your runtime. Here we will use the basic <code>npm start</code> which will run <code>node server.js</code> to start your server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD [ &quot;npm&quot;, &quot;start&quot; ]</span><br></pre></td></tr></table></figure>
+<p>Your <code>Dockerfile</code> should now look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FROM node:carbon</span><br><span class="line"></span><br><span class="line"># Create app directory</span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line"></span><br><span class="line"># Install app dependencies</span><br><span class="line"># A wildcard is used to ensure both package.json AND package-lock.json are copied</span><br><span class="line"># where available (npm@5+)</span><br><span class="line">COPY package*.json ./</span><br><span class="line"></span><br><span class="line">RUN npm install</span><br><span class="line"># If you are building your code for production</span><br><span class="line"># RUN npm install --only=production</span><br><span class="line"></span><br><span class="line"># Bundle app source</span><br><span class="line">COPY . .</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line">CMD [ &quot;npm&quot;, &quot;start&quot; ]</span><br></pre></td></tr></table></figure>
+<h2 id="dockerignore-file"><a href="#dockerignore-file" class="headerlink" title=".dockerignore file"></a>.dockerignore file</h2><p>Create a <code>.dockerignore</code> file in the same directory as your <code>Dockerfile</code> with following content:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node_modules</span><br><span class="line">npm-debug.log</span><br></pre></td></tr></table></figure>
+<p>This will prevent your local modules and debug logs from being copied onto your Docker image and possibly overwriting modules installed within your image.</p>
+<h2 id="Building-your-image"><a href="#Building-your-image" class="headerlink" title="Building your image"></a>Building your image</h2><p>Go to the directory that has your <code>Dockerfile</code> and run the following command to build the Docker image. The <code>-t</code> flag lets you tag your image so it’s easier to find later using the<code>docker images</code> command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t &lt;your username&gt;/node-web-app .</span><br></pre></td></tr></table></figure>
+<p>Your image will now be listed by Docker:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line"></span><br><span class="line"># Example</span><br><span class="line">REPOSITORY                      TAG        ID              CREATED</span><br><span class="line">node                            carbon     1934b0b038d1    5 days ago</span><br><span class="line">&lt;your username&gt;/node-web-app    latest     d64d3505b0d2    1 minute ago</span><br></pre></td></tr></table></figure>
+<h2 id="Run-the-image"><a href="#Run-the-image" class="headerlink" title="Run the image"></a>Run the image</h2><p>Running your image with <code>-d</code> runs the container in detached mode, leaving the container running in the background. The <code>-p</code> flag redirects a public port to a private port inside the container. Run the image you previously built:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 49160:8080 -d &lt;your username&gt;/node-web-app</span><br></pre></td></tr></table></figure>
+<p>Print the output of your app:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Get container ID</span><br><span class="line">$ docker ps</span><br><span class="line"></span><br><span class="line"># Print app output</span><br><span class="line">$ docker logs &lt;container id&gt;</span><br><span class="line"></span><br><span class="line"># Example</span><br><span class="line">Running on http://localhost:8080</span><br></pre></td></tr></table></figure>
+<p>If you need to go inside the container you can use the <code>exec</code> command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Enter the container</span><br><span class="line">$ docker exec -it &lt;container id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+<h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>To test your app, get the port of your app that Docker mapped:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line"></span><br><span class="line"># Example</span><br><span class="line">ID            IMAGE                                COMMAND    ...   PORTS</span><br><span class="line">ecce33b30ebf  &lt;your username&gt;/node-web-app:latest  npm start  ...   49160-&gt;8080</span><br></pre></td></tr></table></figure>
+<p>In the example above, Docker mapped the <code>8080</code> port inside of the container to the port<code>49160</code> on your machine.</p>
+<p>Now you can call your app using <code>curl</code> (install if needed via: <code>sudo apt-get install curl</code>):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ curl -i localhost:49160</span><br><span class="line"></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">X-Powered-By: Express</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Content-Length: 12</span><br><span class="line">ETag: W/&quot;c-M6tWOb/Y57lesdjQuHeB1P/qTV0&quot;</span><br><span class="line">Date: Mon, 13 Nov 2017 20:53:59 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">Hello world</span><br></pre></td></tr></table></figure>
+<p>We hope this tutorial helped you get up and running a simple Node.js application on Docker.</p>
+<p>You can find more information about Docker and Node.js on Docker in the following places:</p>
+<ul>
+<li><a href="https://registry.hub.docker.com/_/node/" target="_blank" rel="noopener">Official Node.js Docker Image</a></li>
+<li><a href="https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md" target="_blank" rel="noopener">Node.js Docker Best Practices Guide</a></li>
+<li><a href="https://docs.docker.com/" target="_blank" rel="noopener">Official Docker documentation</a></li>
+<li><a href="https://stackoverflow.com/questions/tagged/docker" target="_blank" rel="noopener">Docker Tag on StackOverflow</a></li>
+<li><a href="https://reddit.com/r/docker" target="_blank" rel="noopener">Docker Subreddit</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/以太坊研究2-智能合约调试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -420,198 +730,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/以太坊研究1-私有链Docker部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/19/以太坊研究1-私有链Docker部署/" itemprop="url">以太坊研究1-私有链Docker部署</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T17:33:34+08:00">
-                2018-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="本地生成创世块"><a href="#本地生成创世块" class="headerlink" title="本地生成创世块"></a>本地生成创世块</h2><h3 id="准备工具环境"><a href="#准备工具环境" class="headerlink" title="准备工具环境"></a>准备工具环境</h3><p>下载<code>go-ethereum代码</code>（go的开发环境准备，不在此文范围）</p>
-<p><strong>1.6.7生成的genesis.json有bug，后续版本不识别。推荐使用最新版，bug修正方法为“0”改为“0x0”。</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载源码</span></span><br><span class="line">go get github.com/ethereum/go-ethereum/</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/ethereum/go-ethereum</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译1.6.7版本的代码</span></span><br><span class="line">git checkout -b v1.6.7 v1.6.7</span><br><span class="line">make all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">sudo ln -s <span class="variable">$PWD</span>/build/bin/* /usr/<span class="built_in">local</span>/bin/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查是否安装OK</span></span><br><span class="line">geth version</span><br><span class="line">    Geth</span><br><span class="line">    Version: 1.6.7-stable</span><br><span class="line">    Git Commit: ab5646c532292b51e319f290afccf6a44f874372</span><br><span class="line">    Architecture: amd64</span><br><span class="line">    Protocol Versions: [63 62]</span><br><span class="line">    Network Id: 1</span><br><span class="line">    Go Version: go1.8.3</span><br><span class="line">    Operating System: linux</span><br><span class="line">    GOPATH=/home/xxp/go</span><br><span class="line">    GOROOT=/home/xxp/Software/go</span><br></pre></td></tr></table></figure>
-<h3 id="生成私链创世块的配置"><a href="#生成私链创世块的配置" class="headerlink" title="生成私链创世块的配置"></a>生成私链创世块的配置</h3><ul>
-<li>创建账户<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建testnet目录</span></span><br><span class="line">➜  mkdir testnet &amp;&amp; <span class="built_in">cd</span> testnet</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建3个普通账户，密码自定</span></span><br><span class="line">➜  geth --datadir node10 account new</span><br><span class="line"><span class="comment"># 把密码记录到文件里，后面会频繁输入</span></span><br><span class="line">➜  <span class="built_in">echo</span> node0 &gt; node0/password</span><br><span class="line"></span><br><span class="line">➜  geth --datadir node1 account new</span><br><span class="line">➜  <span class="built_in">echo</span> node1 &gt; node1/password</span><br><span class="line">➜  geth --datadir node2 account new</span><br><span class="line">➜  <span class="built_in">echo</span> node2 &gt; node2/password</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>如上打印的一串16进制的字符串就代表账户的userID（理解成网络中的IP地址），后面puppeth需要用到。</p>
-<ul>
-<li>生成genesis文件</li>
-</ul>
-<p>genesis文件定义了私链的第一个块生成，直接看操作吧(省略了些输出)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">➜  testnet puppeth</span><br><span class="line"></span><br><span class="line">Please specify a network name to administer (no spaces, please)</span><br><span class="line">&gt; testnet</span><br><span class="line">Sweet, you can <span class="built_in">set</span> this via --network=testnet next time!</span><br><span class="line"></span><br><span class="line">INFO [08-21|23:04:14] Administering Ethereum network           name=testnet</span><br><span class="line">WARN [08-21|23:04:14] No previous configurations found         path=/home/xxp/.puppeth/testnet</span><br><span class="line"></span><br><span class="line">What would you like to <span class="keyword">do</span>? (default = stats)</span><br><span class="line"> 1. Show network stats</span><br><span class="line"> 2. Configure new genesis</span><br><span class="line"> 3. Track new remote server</span><br><span class="line"> 4. Deploy network components</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line">Which consensus engine to use? (default = clique)</span><br><span class="line"> 1. Ethash - proof-of-work</span><br><span class="line"> 2. Clique - proof-of-authority</span><br><span class="line">&gt; 2</span><br><span class="line"><span class="comment"># 设置5秒出一个块</span></span><br><span class="line">How many seconds should blocks take? (default = 15)</span><br><span class="line">&gt; 5</span><br><span class="line"><span class="comment"># 输入有签名权限的账户</span></span><br><span class="line">Which accounts are allowed to seal? (mandatory at least one)</span><br><span class="line">&gt; 0x799a8f7796d1d20b8198a587caaf545cdde5de13</span><br><span class="line">&gt; 0x1458eac314d8fc922029095fae20483f55726017</span><br><span class="line">&gt; 0x3ca60eb49314d867ab75a3c7b3a5aa61c3d6ef71</span><br><span class="line">&gt; 0x</span><br><span class="line"><span class="comment"># 输入有预留余额的账户</span></span><br><span class="line">Which accounts should be pre-funded? (advisable at least one)</span><br><span class="line">&gt; 0x799a8f7796d1d20b8198a587caaf545cdde5de13</span><br><span class="line">&gt; 0x1458eac314d8fc922029095fae20483f55726017</span><br><span class="line">&gt; 0x3ca60eb49314d867ab75a3c7b3a5aa61c3d6ef71</span><br><span class="line">&gt; 0x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Specify your chain/network ID <span class="keyword">if</span> you want an explicit one (default = random)</span><br><span class="line">&gt; 378                </span><br><span class="line"></span><br><span class="line">Anything fun to embed into the genesis block? (max 32 bytes)</span><br><span class="line">&gt; </span><br><span class="line"></span><br><span class="line">What would you like to <span class="keyword">do</span>? (default = stats)</span><br><span class="line"> 1. Show network stats</span><br><span class="line"> 2. Save existing genesis</span><br><span class="line"> 3. Track new remote server</span><br><span class="line"> 4. Deploy network components</span><br><span class="line">&gt; 2</span><br><span class="line"></span><br><span class="line">Which file to save the genesis into? (default = testnet.json)</span><br><span class="line">&gt; genesis.json</span><br><span class="line">INFO [08-21|23:05:36] Exported existing genesis block</span><br></pre></td></tr></table></figure>
-<p>最后会在当前目录生成genesis.json文件。</p>
-<h2 id="服务器环境准备"><a href="#服务器环境准备" class="headerlink" title="服务器环境准备"></a>服务器环境准备</h2><p>上传创世文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r  -P 36000 /Users/vincexie/go/src/github.com/ethereum/go-ethereum/testnet/genesis.json  root@119.29.226.45:/root</span><br></pre></td></tr></table></figure>
-<p>生成数据目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#geth --datadir /root/node0 init genesis.json</span></span><br><span class="line">docker run  --rm --net=host -v /root:/root ethereum/client-go --datadir /root/ethereum/node4 init /root/ethereum/genesis0.json</span><br></pre></td></tr></table></figure></p>
-<p>创建账户文件或上传账户文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#geth --datadir node0 account new</span></span><br><span class="line">docker run  --rm --net=host -v /root:/root ethereum/client-go --datadir /root/node0 account new</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r  -P 36000 /Users/vincexie/go/src/github.com/ethereum/go-ethereum/testnet/node0/keystore  root@119.29.226.45:/root/node0/keystore</span><br></pre></td></tr></table></figure>
-<h2 id="docker启动私有链（多个中心节点）"><a href="#docker启动私有链（多个中心节点）" class="headerlink" title="docker启动私有链（多个中心节点）"></a>docker启动私有链（多个中心节点）</h2><p>新建私有链</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth1  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10001 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node0 --port 30001 --nodiscover --unlock <span class="string">"0x5027bda4349b1f0c415af154a5e15a659d444b67,0x97F4FDB4b2393ba235a22b31e446e6DCd127d855,0x775e2741cDf53C0eAf1Cf46edEd6Ba9fc5D5791b"</span> --password /root/ethereum/password.txt --fast --cache=256 console</span><br></pre></td></tr></table></figure>
-<p><strong>参数</strong></p>
-<p>–datadir 数据目录，私有链必须</p>
-<p>–bootnodes 中心节点，拉取数据</p>
-<p>–unlock 0x5027bda4349b1f0c415af154a5e15a659d444b67 打开账户，中心节点必须打开授权账户</p>
-<p>–port 其他节点通过port可连接节点</p>
-<p>–fast 只拉取头部数据（1.6.0后默认开启）</p>
-<p> –syncmode=fast 拉取所有数据</p>
-<p>–rpc 开启rpc</p>
-<p>–rpcaddress 0.0.0.0 接受任何ip访问</p>
-<p>–rpcport 10001 可通过端口访问rpc</p>
-<p>–rpcapi eth,web3,admin,db,debug,miner,net,shh,personal,shh,txpool</p>
-<p>进入容器获取本机节点</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker attach geth1</span><br><span class="line">&gt; admin.nodeInfo.enode</span><br><span class="line"><span class="string">"enode://a1cda94126c2a80187c9fc52859ae99c6f307ce45018845d728d8d5c4a5b4a77f3f846c5e7a0d4a7691e70afcb1e9a5359397cfe26be8358d203b7b614856621@[::]:30001?discport=0"</span></span><br></pre></td></tr></table></figure>
-<p>把enode记录下来并根据ip地址改为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"enode://a1cda94126c2a80187c9fc52859ae99c6f307ce45018845d728d8d5c4a5b4a77f3f846c5e7a0d4a7691e70afcb1e9a5359397cfe26be8358d203b7b614856621@119.29.226.45:30001"</span></span><br></pre></td></tr></table></figure>
-<p>获取相连节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.peers</span><br></pre></td></tr></table></figure>
-<p><strong>在第二台服务器上增加中心节点</strong></p>
-<p>增加了–bootnodes参数，以后的中心节点类推</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth2  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10002 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node1 --port 30002 --nodiscover --unlock 0xf867019806b730c7d338c92375bfb7560e0e6b59 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes enode://a1cda94126c2a80187c9fc52859ae99c6f307ce45018845d728d8d5c4a5b4a77f3f846c5e7a0d4a7691e70afcb1e9a5359397cfe26be8358d203b7b614856621@119.29.226.45:30001 console</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth3  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10003 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node2 --port 30003 --nodiscover --unlock 0x00296b16cac6036f176b54a29853a6adbf67ee19 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes enode://a1cda94126c2a80187c9fc52859ae99c6f307ce45018845d728d8d5c4a5b4a77f3f846c5e7a0d4a7691e70afcb1e9a5359397cfe26be8358d203b7b614856621@119.29.226.45:30001 console</span><br></pre></td></tr></table></figure>
-<p><strong>本地增加普通节点</strong>（可作为本地钱包）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">geth --datadir node0 init genesis.json</span><br><span class="line">geth --datadir node0 --bootnodes  enode://a1cda94126c2a80187c9fc52859ae99c6f307ce45018845d728d8d5c4a5b4a77f3f846c5e7a0d4a7691e70afcb1e9a5359397cfe26be8358d203b7b614856621@119.29.226.45:30001 --rpc --rpcaddr 0.0.0.0 --rpcport 20001 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 console</span><br></pre></td></tr></table></figure>
-<h2 id="如何进入节点"><a href="#如何进入节点" class="headerlink" title="如何进入节点"></a>如何进入节点</h2><p>服务器进入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker attach geth1</span><br></pre></td></tr></table></figure>
-<p>本地进入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geth attach http://119.29.226.45:10001</span><br></pre></td></tr></table></figure>
-<p>osx钱包链接远程节点</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Mist.app/Contents/MacOS/Mist --node geth --rpc http://119.29.226.45:10001 --swarmurl=<span class="string">"http://swarm-gateways.net"</span></span><br></pre></td></tr></table></figure>
-<p>osx钱包链接本地节点</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Applications/Mist.app/Contents/MacOS/Mist --node geth --rpc http://localhost:20001 --swarmurl=<span class="string">"http://swarm-gateways.net"</span></span><br></pre></td></tr></table></figure>
-<h2 id="操作相关"><a href="#操作相关" class="headerlink" title="操作相关"></a>操作相关</h2><p>解锁账户</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">personal.unlockAccount(eth.accounts[<span class="number">0</span>])</span><br><span class="line">personal.unlockAccount(<span class="string">'0x775e2741cDf53C0eAf1Cf46edEd6Ba9fc5D5791b'</span>)</span><br></pre></td></tr></table></figure>
-<p>查询余额</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eth.getBalance(eth.accounts[0])</span><br></pre></td></tr></table></figure>
-<p>挖矿（打包区块）</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">miner.start()</span><br></pre></td></tr></table></figure>
-<p>授权账户挖矿权限（需过半数中心节点执行）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clique.propose(&quot;0xd26abe234ce36aec5c45e85e96aa5330c4c9e065&quot;, true)</span><br></pre></td></tr></table></figure>
-<p>转账</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; </span><br><span class="line">&gt; var sender = eth.accounts[0]</span><br><span class="line">undefined</span><br><span class="line">&gt; var receiver = <span class="string">"0x5027bda4349b1f0c415af154a5e15a659d444b67"</span></span><br><span class="line">undefined</span><br><span class="line">&gt; var amount = web3.toWei(10, <span class="string">"ether"</span>)</span><br><span class="line">undefined</span><br><span class="line">&gt; personal.unlockAccount(eth.accounts[0])</span><br><span class="line">Unlock account 0x799a8f7796d1d20b8198a587caaf545cdde5de13</span><br><span class="line">Passphrase: </span><br><span class="line"><span class="literal">true</span></span><br><span class="line">&gt; eth.sendTransaction(&#123;from:sender, to:receiver, value: amount&#125;)</span><br><span class="line"><span class="string">"0x97ca1f5fa27df083e14b2ffb82c2a60744aeae0f1a7b5e735ca4d0c05c16f7b6"</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="相关备忘"><a href="#相关备忘" class="headerlink" title="相关备忘"></a>相关备忘</h2><p>私有链每天出产17280个块，每五秒一个块。现在链的总块数是225027，大约十三天的量。节点采用只拉头部的话数据链占用空间是93m，每天大概7m。全拉的话是111m，大概每天9m。因为块区基本都是空块，所以差别不大。如果块区有数据的话，差别会更大。</p>
-<p>服务器运行geth</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --rm --net=host ethereum/client-go</span><br></pre></td></tr></table></figure>
-<p><a href="https://ethereum.stackexchange.com/questions/3151/how-to-make-miner-to-mine-only-when-there-are-pending-transactions" target="_blank" rel="noopener">只在有数据时挖矿</a></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mining_threads = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkWork</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (eth.getBlock(<span class="string">"pending"</span>).transactions.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (eth.mining) <span class="keyword">return</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"== Pending transactions! Mining..."</span>);</span><br><span class="line">        miner.start(mining_threads);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        miner.stop();</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"== No transactions! Mining stopped."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">eth.filter(<span class="string">"latest"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, block</span>) </span>&#123; checkWork(); &#125;);</span><br><span class="line">eth.filter(<span class="string">"pending"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, block</span>) </span>&#123; checkWork(); &#125;);</span><br><span class="line"></span><br><span class="line">checkWork();</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">geth --preload <span class="string">"/path/to/mineWhenNeeded.js"</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -661,7 +784,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -674,7 +797,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -683,7 +806,7 @@
           </nav>
 
                     		<div class="category-all">
-                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
                     		</div>
           
 

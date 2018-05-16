@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Web,Vue," />
 
 
 
@@ -79,16 +79,21 @@
 
 
 
-<meta name="description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="谢志海的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
+<meta name="keywords" content="Web,Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页Sticky Footer(zt)">
+<meta property="og:url" content="http://yoursite.com/2018/05/16/网页Sticky-Footer/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
+<meta property="og:description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1frd0qga0kcj31880so749.jpg">
+<meta property="og:updated_time" content="2018-05-16T03:27:54.158Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谢志海的博客">
-<meta name="twitter:description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
+<meta name="twitter:title" content="网页Sticky Footer(zt)">
+<meta name="twitter:description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg">
 
 
 
@@ -118,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/16/网页Sticky-Footer/"/>
 
 
 
 
 
-  <title>谢志海的博客</title>
+  <title>网页Sticky Footer(zt) | 谢志海的博客</title>
   
 
 
@@ -143,8 +148,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,9 +231,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -259,9 +263,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/16/网页Sticky-Footer/" itemprop="url">网页Sticky Footer(zt)</a></h1>
+          <h1 class="post-title" itemprop="name headline">网页Sticky Footer(zt)</h1>
         
 
         <div class="post-meta">
@@ -311,9 +313,7 @@
       
 
       
-        
-          
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>做过网页开发的同学想必都遇到过这样尴尬的排版问题：<br>在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>做过网页开发的同学想必都遇到过这样尴尬的排版问题：<br>在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：</p>
 <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg" alt="img"></p>
 <p>笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。<br>本文将带大家重新认识这个常见的网页效果，以及一些可行的实现方案。</p>
 <h2 id="什么是-“Sticky-Footer”"><a href="#什么是-“Sticky-Footer”" class="headerlink" title="什么是 “Sticky Footer”"></a>什么是 “Sticky Footer”</h2><p>所谓 “Sticky Footer”，并不是什么新的前端概念和技术，它指的就是一种网页效果：<br>如果页面内容不足够长时，页脚固定在浏览器窗口的底部；如果内容足够长时，页脚固定在页面的最底部。<br><strong>总而言之，就是页脚一直处于最底</strong>，效果大致如图所示：</p>
@@ -338,8 +338,6 @@
 <p>当然，技术是不断更新的，也许还有很多不同的、更好的方案。但相信大家最终目都是一样的，为了更好的用户体验！</p>
 <p>参考资料：<br><a href="https://css-tricks.com/couple-takes-sticky-footer/" target="_blank" rel="noopener">https://css-tricks.com/couple-takes-sticky-footer/</a><br><a href="http://www.w3cplus.com/css3/css-secrets/sticky-footers.html" target="_blank" rel="noopener">http://www.w3cplus.com/css3/css-secrets/sticky-footers.html</a></p>
 
-          
-        
       
     </div>
     
@@ -354,303 +352,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/以太坊私有链bug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/以太坊私有链bug/" itemprop="url">以太坊私有链bug-Signed recently, must wait for others</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T16:38:18+08:00">
-                2018-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Web/" rel="tag"># Web</a>
           
-            
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
           
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
-<li>解决3个中心节点联通后，txpool并不同步。</li>
-<li>解决3个中心节点联通后，并不挖矿的情况。</li>
-<li>poa挖矿需要一半以上的节点签名才可运作。</li>
-</ul>
-<p><strong>3个中心节点均联通，但不打包。</strong></p>
-<p><img src="/var/folders/5g/5dsm3q0j3v5972fcv7s8bftm0000gn/T/abnerworks.Typora/image-20180514163942997.png" alt="image-20180514163942997"></p>
-<h4 id="txpool并不同步"><a href="#txpool并不同步" class="headerlink" title="txpool并不同步"></a>txpool并不同步</h4><p>出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。</p>
-<p>解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。</p>
-<h4 id="不挖矿"><a href="#不挖矿" class="headerlink" title="不挖矿"></a>不挖矿</h4><p>出现原因：unlock account  与 etherbase account不一致。</p>
-<p><img src="/var/folders/5g/5dsm3q0j3v5972fcv7s8bftm0000gn/T/abnerworks.Typora/image-20180514164335234.png" alt="image-20180514164335234"></p>
-<p>解决方法：</p>
-<ul>
-<li>miner.setEtherbase(address)</li>
-<li>geth –etherbase ‘someaddress’</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/以太坊研究4-极限性能测试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/24/以太坊研究4-极限性能测试/" itemprop="url">以太坊研究4-极限性能测试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T14:41:52+08:00">
-                2018-04-24
-              </time>
+              <a href="/2018/05/14/以太坊私有链bug/" rel="next" title="以太坊私有链bug-Signed recently, must wait for others">
+                <i class="fa fa-chevron-left"></i> 以太坊私有链bug-Signed recently, must wait for others
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章测试了原有的5秒一区块3中心点测试链的极限性能。这次测试实时打包区块链的极限性能。</p>
-<h4 id="生成新的链"><a href="#生成新的链" class="headerlink" title="生成新的链"></a>生成新的链</h4><p>测试前在社区问了一下相关问题，得到答案是区块链生成后不可以在原链更改生成时间，因此只能新建测试链进行测试。并且，可以设置生成时间为0，就是收到数据后会立刻打包，不用等时间到。</p>
-<p>相关问题：<a href="https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain" target="_blank" rel="noopener">https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain</a></p>
-<p>genesis.json改周期，保存为genesis0.json</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"clique": &#123;</span><br><span class="line">      "period": 0,</span><br><span class="line">      "epoch": 30000</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>生成数据目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#geth --datadir /root/node0 init genesis.json</span></span><br><span class="line">docker run  --rm --net=host -v /root:/root ethereum/client-go --datadir /root/ethereum/node4 init /root/ethereum/genesis0.json</span><br></pre></td></tr></table></figure>
-<p>复制旧账户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp ./node0/keystore/* ./node4/keystore</span><br><span class="line">cp ./node1/keystore/* ./node5/keystore</span><br><span class="line">cp ./node2/keystore/* ./node6/keystore</span><br></pre></td></tr></table></figure>
-<h4 id="启动新zero链"><a href="#启动新zero链" class="headerlink" title="启动新zero链"></a>启动新zero链</h4><p>旧链为geth1，geth2，geth3。新链为geth4。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth4  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10004 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node4 --port 30004 --nodiscover --unlock <span class="string">"0x5027bda4349b1f0c415af154a5e15a659d444b67,0x97F4FDB4b2393ba235a22b31e446e6DCd127d855,0x775e2741cDf53C0eAf1Cf46edEd6Ba9fc5D5791b"</span> --password /root/ethereum/password.txt --fast --cache=256 console</span><br></pre></td></tr></table></figure>
-<p>开启挖矿等待</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqntil6f51j316g05iwgb.jpg" alt="5"></p>
-<p>获取enode后继续开启geth5、geth6</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth5  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10005 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node5 --port 30005 --nodiscover --unlock 0xf867019806b730c7d338c92375bfb7560e0e6b59 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004 console</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth6  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10006 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node6 --port 30006 --nodiscover --unlock 0x00296b16cac6036f176b54a29853a6adbf67ee19 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes <span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span> console</span><br></pre></td></tr></table></figure>
-<p>节点连接失败，手动添加</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="测试开始"><a href="#测试开始" class="headerlink" title="测试开始"></a>测试开始</h3><h4 id="出错"><a href="#出错" class="headerlink" title="出错"></a>出错</h4><p>一开始就开始出错，geth4、5已经挖矿到1671，geth6停留在1090。</p>
-<p>geth4、geth5</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnuk7pzzrj318c05iwhd.jpg" alt="geth4"></p>
-<p>geth6</p>
-<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fqnvtnlxezj317e046tau.jpg" alt="geth6"></p>
-<p><strong>出错分析</strong></p>
-<p>一开始就开始出错，因为采用实时挖矿，非轮流挖矿，如大量交易提交给区块链网络，geth4、geth5、geth6都会同时进行挖矿。我们geth5、geth6，都只跟geth4链接，当出现分叉时，geth6跟geth4都保留自己的链，而没有放弃自己的链。</p>
-<p><strong>解决方法</strong></p>
-<p>geth6与geth5也联通，当有两个节点都在1671时，自动放弃自己的分叉，跟上主链。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://b5de2120a829d201d65a7bb85804973590f818e3c0991d8499f2d47dd6c6a1e45786f9f04247bca0743f38f7006e48054146d6ab82156a6e03cb104f7630022e@127.0.0.1:30005?discport=0"</span>)</span><br></pre></td></tr></table></figure>
-<p>跟上主链</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvtta7f0j31kw0iiwvf.jpg" alt="zhulian"></p>
-<h3 id="极限情况"><a href="#极限情况" class="headerlink" title="极限情况"></a>极限情况</h3><p>cpu使用</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvmr4wllj30w203ugmx.jpg" alt="321"></p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>向一个节点提交交易的话，该节点会承担大部分的打包工作，打包极限为225/区块，其他节点该时的打包数约为75/节点。</p>
-<p>从09:02:34开始发送第一笔交易，发送到4314笔时产生堵塞，时间为09:03:05。到09:03:13时恢复交易。通过计算可得出</p>
-<p><strong>3中心的实时链向同一节点发送交易，交易计算峰值为140笔/秒，平均峰值为110笔/秒，如分散提交交易峰值可更高。</strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -660,14 +393,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -675,6 +405,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -695,8 +429,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -792,6 +535,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-“Sticky-Footer”"><span class="nav-number">2.</span> <span class="nav-text">什么是 “Sticky Footer”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何实现"><span class="nav-number">3.</span> <span class="nav-text">如何实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案一：absolute"><span class="nav-number">3.1.</span> <span class="nav-text">实现方案一：absolute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案二：calc"><span class="nav-number">3.2.</span> <span class="nav-text">实现方案二：calc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案三：table"><span class="nav-number">3.3.</span> <span class="nav-text">实现方案三：table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案四：Flexbox"><span class="nav-number">3.4.</span> <span class="nav-text">实现方案四：Flexbox</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">4.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -932,6 +691,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

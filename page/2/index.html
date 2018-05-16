@@ -242,6 +242,276 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/以太坊研究3-性能测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/23/以太坊研究3-性能测试/" itemprop="url">以太坊研究3-性能测试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T15:40:56+08:00">
+                2018-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>研究私有链的各种性能瓶颈。</p>
+<h4 id="私有链如何挖矿？"><a href="#私有链如何挖矿？" class="headerlink" title="私有链如何挖矿？"></a>私有链如何挖矿？</h4><p>轮流挖矿。5秒挖一个区块并且总共3个节点时，每个节点会15秒挖一次矿</p>
+<p>当挖矿成功时显示Successfully sealed new block。</p>
+<p>这是一次挖矿周期的输出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INFO [04-23|10:37:17] Successfully sealed new block            number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] 🔨 mined potential block                  number=904567 <span class="built_in">hash</span>=4977d8…b45fb7</span><br><span class="line">INFO [04-23|10:37:17] Commit new mining work                   number=904568 txs=0   uncles=0 elapsed=464.361µs</span><br><span class="line">INFO [04-23|10:37:17] Signed recently, must <span class="built_in">wait</span> <span class="keyword">for</span> others</span><br></pre></td></tr></table></figure>
+<h4 id="所需确认的块数"><a href="#所需确认的块数" class="headerlink" title="所需确认的块数"></a>所需确认的块数</h4><p>因为轮流打包，不可能出现孤块或叔父块，所以私有链只要一个区块打包了就可以确认交易，无需后续的多个块数确认。</p>
+<h4 id="最少中心点挖矿数"><a href="#最少中心点挖矿数" class="headerlink" title="最少中心点挖矿数"></a>最少中心点挖矿数</h4><p>3个。当少于3个时，挖矿不工作。</p>
+<h4 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h4><p>十万次交易测试代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Web3 = <span class="built_in">require</span>(<span class="string">'web3'</span>);</span><br><span class="line"><span class="keyword">var</span> web3 = <span class="keyword">new</span> Web3(<span class="string">"http://119.29.226.45:10001"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用while并发会出现堵塞，用递归控制并发</span></span><br><span class="line"><span class="keyword">var</span> sendTxRecur = <span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">    web3.eth.sendTransaction(&#123;<span class="attr">from</span>:<span class="string">"0x5027bDa4349b1f0c415Af154A5e15a659d444B67"</span>, <span class="attr">to</span>:<span class="string">"0x810E626827eAFF977Fa1b00E19389220672aEB34"</span>, <span class="attr">value</span>:<span class="number">1</span>&#125;,<span class="function"><span class="keyword">function</span> (<span class="params">err,hash</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="keyword">new</span> <span class="built_in">Date</span>().toISOString()+<span class="string">"-------"</span> + j)</span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="built_in">console</span>.error(err)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(hash)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        i++;</span><br><span class="line">        j++;</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">10000</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            sendTxRecur(i)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//同时运行10个递归</span></span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br><span class="line">sendTxRecur(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>节点提交交易，一秒提交了190个交易</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tKfTcgy1fqms5pk1kdj31kw0co7og.jpg" alt="fd"></p>
+<p>cpu使用情况</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fqmtel80ezj30yy05aabv.jpg" alt="2"></p>
+<p>硬盘使用情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">私有链每天出产17280个块，每五秒一个块。现在链的总块数是225027，大约十三天的量。节点采用只拉头部的话数据链占用空间是93m，每天大概7m。全拉的话是111m，大概每天9m。因为块区基本都是空块，所以差别不大。如果块区有数据的话，差别会更大。</span><br></pre></td></tr></table></figure>
+<h4 id="打包交易数量"><a href="#打包交易数量" class="headerlink" title="打包交易数量"></a>打包交易数量</h4><p>单个区块最多容纳225个交易，以5秒为挖出一个区块的设置来计算。</p>
+<p>每秒可支持交易数量为45笔。</p>
+<h3 id="达到极限出错情况"><a href="#达到极限出错情况" class="headerlink" title="达到极限出错情况"></a>达到极限出错情况</h3><p>10:54:48 发送第一笔交易，到10:54:59 时总共发出1750笔交易，并成功返回哈希。11秒内区块链网络广播了1750笔交易后，发生了堵塞，后续交易的提交不成功。之后依然不停提交交易，直至10:55:28，中间间隔29秒，区块链恢复可提交交易状态。出错情况可复现。多次测试发现有时为1950笔交易堵塞，跟打包周期有关。</p>
+<p><strong>出错判断</strong></p>
+<p>1750/45 = 38。 头10秒提交的交易需要38秒来消化，总共消化40秒，中间停顿30秒，区块链网络当接受过量，即单个节点超过两个区块的数据量时停止接收交易。当存量交易被打包完毕时，恢复网络畅通。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>5秒一个区块的3中心节点网络每秒可交易数量为45，如网络中堵塞的还没打包交易数量超过1700时，网络可能发生不接受交易情况，但错误信息可捕捉，可后续继续提交交易。</p>
+<p><strong>3中心的5秒链向同一节点发送交易，交易计算峰值为45笔/秒。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/js时间处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/js时间处理/" itemprop="url">js时间处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:46:45+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>日期的生成与设置使用new Date()，网页上的显示使用moment。</p>
+<h4 id="获取今天和之后的信息"><a href="#获取今天和之后的信息" class="headerlink" title="获取今天和之后的信息"></a>获取今天和之后的信息</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  date.setHours(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  MessageProxy.getMessageAfterDate(&#123;&#125;,date,ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">		res.send(message);</span><br><span class="line">	&#125;));</span><br><span class="line"><span class="comment">//数据库操作如下</span></span><br><span class="line">  Message.find(_.assign(data,&#123;<span class="attr">time</span>:&#123;<span class="attr">$gte</span>:date&#125;&#125;),<span class="literal">null</span>,&#123;<span class="attr">sort</span>:&#123;<span class="attr">time</span>:<span class="number">1</span>&#125;&#125;,callback)</span><br></pre></td></tr></table></figure>
+<h4 id="从Date那里获取24进制时间"><a href="#从Date那里获取24进制时间" class="headerlink" title="从Date那里获取24进制时间"></a>从Date那里获取24进制时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(item.time).toLocaleTimeString(<span class="string">'en-US'</span>, &#123; <span class="attr">hour12</span>: <span class="literal">false</span>,</span><br><span class="line">          hour: <span class="string">"numeric"</span>,</span><br><span class="line">          minute: <span class="string">"numeric"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="拼接Date时间"><a href="#拼接Date时间" class="headerlink" title="拼接Date时间"></a>拼接Date时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="keyword">this</span>.date+<span class="string">' '</span>+<span class="keyword">this</span>.time)</span><br></pre></td></tr></table></figure>
+<h3 id="moment的使用"><a href="#moment的使用" class="headerlink" title="moment的使用"></a><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment的使用</a></h3><p>日期显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).calendar()</span><br></pre></td></tr></table></figure>
+<p>24小时显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).format(<span class="string">'a HH:mm'</span>)</span><br></pre></td></tr></table></figure>
+<p>增加一天</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment().add(<span class="number">1</span>,<span class="string">'days'</span>).format(<span class="string">"MMMDo"</span>)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/vue优秀插件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -318,6 +588,9 @@
 <li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
 <p>整体的ui框架，可同时作用于手机端。</p>
 </li>
+<li><p><a href="https://github.com/troxler/vue-headful" target="_blank" rel="noopener">vue-headful</a></p>
+<p>设置标题、关键字等</p>
+</li>
 </ul>
 <ul>
 <li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
@@ -368,279 +641,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/登录模块流程(2)-Vue前端/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/16/登录模块流程(2)-Vue前端/" itemprop="url">登录模块流程(2)-Vue前端</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:44:19+08:00">
-                2018-04-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。</p>
-<p><strong>通过请求删除cookie更安全</strong></p>
-<h3 id="服务端httpOnly设置"><a href="#服务端httpOnly设置" class="headerlink" title="服务端httpOnly设置"></a>服务端httpOnly设置</h3><p>app.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        httpOnly:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<p>middlewares/auth.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">false</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用vue-session和vue-cookie"><a href="#使用vue-session和vue-cookie" class="headerlink" title="使用vue-session和vue-cookie"></a>使用vue-session和vue-cookie</h3><p>使用vue-session记录信息和vue-cookie删除cookie</p>
-<p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-session官方文档</a></p>
-<p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie官方文档</a></p>
-<h4 id="检查登录"><a href="#检查登录" class="headerlink" title="检查登录"></a>检查登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkLogin()&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.$session.get(<span class="string">'user'</span>))&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = <span class="keyword">this</span>.$session.get(<span class="string">'user'</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<h4 id="登录或注册成功后"><a href="#登录或注册成功后" class="headerlink" title="登录或注册成功后"></a>登录或注册成功后</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that.$session.set(<span class="string">'user'</span>,res.body)</span><br></pre></td></tr></table></figure>
-<h4 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">logout ()&#123;</span><br><span class="line">  <span class="keyword">this</span>.$session.destroy();</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'server'</span>);</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'connect.sid'</span>);</span><br><span class="line">  <span class="keyword">this</span>.checkLogin();</span><br><span class="line">  <span class="keyword">this</span>.$notify(&#123;</span><br><span class="line">    type: <span class="string">'success'</span>,</span><br><span class="line">    title: <span class="string">'已经退出'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/登录模块流程(1)-Express后端/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/09/登录模块流程(1)-Express后端/" itemprop="url">登录模块流程(1)-后端</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T16:59:50+08:00">
-                2018-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fq6j9c5vwkj31ie0ok42b.jpg" alt="截图"></p>
-<h3 id="Oauth例子"><a href="#Oauth例子" class="headerlink" title="Oauth例子"></a>Oauth例子</h3><p><a href="https://github.com/mekentosj/oauth2-example" target="_blank" rel="noopener">https://github.com/mekentosj/oauth2-example</a></p>
-<p><a href="http://www.mobilecode.cn/2015/10/28/node_oauth/" target="_blank" rel="noopener">http://www.mobilecode.cn/2015/10/28/node_oauth/</a></p>
-<h3 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h3><p><a href="https://gitee.com/vincexie/server/blob/master/middlewares/auth.js" target="_blank" rel="noopener">auth.js</a></p>
-<p><a href="https://gitee.com/vincexie/server/blob/master/api/v1/sign.js" target="_blank" rel="noopener">sign.js</a></p>
-<h4 id="备忘"><a href="#备忘" class="headerlink" title="备忘"></a>备忘</h4><p>用户返回信息要通过lodash的pick，不然会直接返回密码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.send(_.pick(user,<span class="string">'email'</span>,<span class="string">'isAdmin'</span>));</span><br></pre></td></tr></table></figure>
-<h3 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line">app.use(cookieParser(config.session_secret));</span><br></pre></td></tr></table></figure>
-<h3 id="Cookie中的connect-sid"><a href="#Cookie中的connect-sid" class="headerlink" title="Cookie中的connect.sid"></a>Cookie中的connect.sid</h3><p>通过这个绑定connect.sid与req.session。重启服务器后只有connect.sid也不能认证通过，需要重新登录。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据cookie给req.session赋值</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<h3 id="验证用户是否登录"><a href="#验证用户是否登录" class="headerlink" title="验证用户是否登录"></a>验证用户是否登录</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(auth.authUser);</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 验证用户是否登录，req.seesion有数据不操作，req.seesion没数据cookie有数据则查数据，</span></span><br><span class="line"><span class="comment"> * 都没有数据的话则下一步。</span></span><br><span class="line"><span class="comment"> * @param req</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> * @param next</span></span><br><span class="line"><span class="comment"> * @returns &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">exports.authUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> ep = <span class="keyword">new</span> eventproxy();</span><br><span class="line">	ep.fail(next);</span><br><span class="line">	res.locals.current_user = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 保证数据可用</span></span><br><span class="line">	ep.all(<span class="string">'get_user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"all"</span>)</span><br><span class="line">		res.locals.current_user = req.session.user = <span class="keyword">new</span> UserModel(user);</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 之前已登录，获取数据</span></span><br><span class="line">	<span class="keyword">if</span> (req.session.user) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(req.session.user)</span><br><span class="line">		ep.emit(<span class="string">'get_user'</span>, req.session.user);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 第一次获取数据，cookie有数据的在数据库查询</span></span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> auth_token = req.signedCookies[config.auth_cookie_name];</span><br><span class="line">		<span class="keyword">if</span> (!auth_token) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> auth = auth_token.split(<span class="string">'$$$$'</span>);</span><br><span class="line">		<span class="keyword">var</span> user_id = auth[<span class="number">0</span>];</span><br><span class="line">		UserProxy.getUserById(user_id, ep.done(<span class="string">'get_user'</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="登录授权中间件"><a href="#登录授权中间件" class="headerlink" title="登录授权中间件"></a>登录授权中间件</h3><p>部分需要授权的操作则加中间件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/user/:email'</span>,auth.userRequired,user.get)</span><br></pre></td></tr></table></figure>
-<p>根据上一步的验证决定是否放行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.userRequired = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!req.session || !req.session.user || !req.session.user._id) &#123;</span><br><span class="line">		<span class="keyword">return</span> res.status(<span class="number">403</span>).send(&#123;<span class="attr">error</span>:<span class="string">'forbidden!'</span>&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// console.log(req.session.user._id)</span></span><br><span class="line">	next();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h3 id="写入session"><a href="#写入session" class="headerlink" title="写入session"></a>写入session</h3><p>用于注册或登录后</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生成session</span></span><br><span class="line"><span class="comment"> * @param user</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">true</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="登录示例"><a href="#登录示例" class="headerlink" title="登录示例"></a>登录示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">exports.login = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> email = validator.trim(req.body.email).toLowerCase();</span><br><span class="line">	<span class="keyword">var</span> password      = validator.trim(req.body.password);</span><br><span class="line">	<span class="keyword">var</span> ep        = <span class="keyword">new</span> eventproxy();</span><br><span class="line"></span><br><span class="line">	ep.fail(next);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!email || !password) &#123;</span><br><span class="line">		res.status(<span class="number">422</span>);</span><br><span class="line">		<span class="keyword">return</span> res.send(&#123;<span class="attr">error</span>: <span class="string">'信息不完整。'</span> &#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> getUser = User.getUserByMail;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	ep.on(<span class="string">'login_error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">login_error</span>) </span>&#123;</span><br><span class="line">		res.status(<span class="number">403</span>);</span><br><span class="line">		res.send(&#123;<span class="attr">error</span>: <span class="string">'邮箱或密码错误'</span>&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	getUser(email, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="keyword">return</span> next(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> passhash = user.password;</span><br><span class="line">		tools.bcompare(password, passhash, ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (!bool) &#123;</span><br><span class="line">				<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			authMiddleWare.gen_session(user, res);</span><br><span class="line">			res.send(_.pick(user,<span class="string">'email'</span>,<span class="string">'balance'</span>));</span><br><span class="line">			<span class="comment">// store session cookie</span></span><br><span class="line">			<span class="comment">//authMiddleWare.gen_session(user, res);</span></span><br><span class="line"></span><br><span class="line">		&#125;));</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -690,7 +695,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -703,7 +708,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -712,7 +717,7 @@
           </nav>
 
                     		<div class="category-all">
-                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
                     		</div>
           
 
