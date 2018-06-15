@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Nodejs,javascript,Web," />
 
 
 
@@ -79,19 +79,18 @@
 
 
 
-<meta name="description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Git常用命令">
-<meta property="og:url" content="http://yoursite.com/Git常用命令.html">
+<meta name="description" content="前言日期的生成与设置使用new Date()，网页上的显示使用moment。 获取今天和之后的信息12345678  var date = new Date();  date.setHours(0,0,0,0)  MessageProxy.getMessageAfterDate(&amp;#123;&amp;#125;,date,ep.done(function (message) &amp;#123;		res.sen">
+<meta name="keywords" content="Nodejs,javascript,Web">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs-时间处理">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/Nodejs-时间处理/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
+<meta property="og:description" content="前言日期的生成与设置使用new Date()，网页上的显示使用moment。 获取今天和之后的信息12345678  var date = new Date();  date.setHours(0,0,0,0)  MessageProxy.getMessageAfterDate(&amp;#123;&amp;#125;,date,ep.done(function (message) &amp;#123;		res.sen">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
-<meta property="og:updated_time" content="2018-05-17T08:24:46.503Z">
+<meta property="og:updated_time" content="2018-05-16T03:34:44.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git常用命令">
-<meta name="twitter:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
-<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
+<meta name="twitter:title" content="Nodejs-时间处理">
+<meta name="twitter:description" content="前言日期的生成与设置使用new Date()，网页上的显示使用moment。 获取今天和之后的信息12345678  var date = new Date();  date.setHours(0,0,0,0)  MessageProxy.getMessageAfterDate(&amp;#123;&amp;#125;,date,ep.done(function (message) &amp;#123;		res.sen">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Git常用命令.html"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/16/Nodejs-时间处理/"/>
 
 
 
 
 
-  <title>Git常用命令 | 谢志海的博客</title>
+  <title>Nodejs-时间处理 | 谢志海的博客</title>
   
 
 
@@ -232,43 +231,161 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Nodejs-时间处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Git常用命令</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="忽略已经被提交的文件"><a href="#忽略已经被提交的文件" class="headerlink" title="忽略已经被提交的文件"></a><a href="https://segmentfault.com/q/1010000000430426" target="_blank" rel="noopener">忽略已经被提交的文件</a></h3><p>正确的做法应该是：<code>git rm --cached logs/xx.log</code>，然后更新 <code>.gitignore</code> 忽略掉目标文件，最后 <code>git commit -m &quot;We really don&#39;t want Git to track this anymore!&quot;</code></p>
-<h3 id="合并提交"><a href="#合并提交" class="headerlink" title="合并提交"></a>合并提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i 4287845</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg" alt="1"></p>
-<ul>
-<li>不停选择用以前的提交来squash</li>
-<li>删掉旧分支</li>
-<li>相同名称命名新分支</li>
-<li>强制提交</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f origin master</span><br></pre></td></tr></table></figure>
-
+          <h1 class="post-title" itemprop="name headline">Nodejs-时间处理</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:46:45+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>日期的生成与设置使用new Date()，网页上的显示使用moment。</p>
+<h4 id="获取今天和之后的信息"><a href="#获取今天和之后的信息" class="headerlink" title="获取今天和之后的信息"></a>获取今天和之后的信息</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  date.setHours(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  MessageProxy.getMessageAfterDate(&#123;&#125;,date,ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">		res.send(message);</span><br><span class="line">	&#125;));</span><br><span class="line"><span class="comment">//数据库操作如下</span></span><br><span class="line">  Message.find(_.assign(data,&#123;<span class="attr">time</span>:&#123;<span class="attr">$gte</span>:date&#125;&#125;),<span class="literal">null</span>,&#123;<span class="attr">sort</span>:&#123;<span class="attr">time</span>:<span class="number">1</span>&#125;&#125;,callback)</span><br></pre></td></tr></table></figure>
+<h4 id="从Date那里获取24进制时间"><a href="#从Date那里获取24进制时间" class="headerlink" title="从Date那里获取24进制时间"></a>从Date那里获取24进制时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(item.time).toLocaleTimeString(<span class="string">'en-US'</span>, &#123; <span class="attr">hour12</span>: <span class="literal">false</span>,</span><br><span class="line">          hour: <span class="string">"numeric"</span>,</span><br><span class="line">          minute: <span class="string">"numeric"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="拼接Date时间"><a href="#拼接Date时间" class="headerlink" title="拼接Date时间"></a>拼接Date时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="keyword">this</span>.date+<span class="string">' '</span>+<span class="keyword">this</span>.time)</span><br></pre></td></tr></table></figure>
+<h3 id="moment的使用"><a href="#moment的使用" class="headerlink" title="moment的使用"></a><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment的使用</a></h3><p>日期显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).calendar()</span><br></pre></td></tr></table></figure>
+<p>24小时显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).format(<span class="string">'a HH:mm'</span>)</span><br></pre></td></tr></table></figure>
+<p>增加一天</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment().add(<span class="number">1</span>,<span class="string">'days'</span>).format(<span class="string">"MMMDo"</span>)</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/16/Vue优秀插件/" rel="next" title="Vue优秀插件">
+                <i class="fa fa-chevron-left"></i> Vue优秀插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/以太坊研究3-性能测试/" rel="prev" title="以太坊研究3-性能测试">
+                以太坊研究3-性能测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -417,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略已经被提交的文件"><span class="nav-number">1.</span> <span class="nav-text">忽略已经被提交的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并提交"><span class="nav-number">2.</span> <span class="nav-text">合并提交</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取今天和之后的信息"><span class="nav-number">1.1.</span> <span class="nav-text">获取今天和之后的信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从Date那里获取24进制时间"><span class="nav-number">1.2.</span> <span class="nav-text">从Date那里获取24进制时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拼接Date时间"><span class="nav-number">1.3.</span> <span class="nav-text">拼接Date时间</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#moment的使用"><span class="nav-number">2.</span> <span class="nav-text">moment的使用</span></a></li></ol></div>
             
 
           </div>

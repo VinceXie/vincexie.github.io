@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看端口占用1sudo lsof -i tcp:3000 搜索字符12grep -B 1 -A 2 PATCH task-02.logcat t">
+<meta name="description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/go/src/github.com/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看本机外网ip1dig +short myip.opendns.com @resolver1.opendn">
 <meta property="og:type" content="website">
 <meta property="og:title" content="谢志海的博客">
 <meta property="og:url" content="http://yoursite.com/Shell常用命令.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看端口占用1sudo lsof -i tcp:3000 搜索字符12grep -B 1 -A 2 PATCH task-02.logcat t">
+<meta property="og:description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/go/src/github.com/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看本机外网ip1dig +short myip.opendns.com @resolver1.opendn">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T08:01:36.776Z">
+<meta property="og:updated_time" content="2018-06-07T07:36:05.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="谢志海的博客">
-<meta name="twitter:description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看端口占用1sudo lsof -i tcp:3000 搜索字符12grep -B 1 -A 2 PATCH task-02.logcat t">
+<meta name="twitter:description" content="添加环境1vim ~/.bash_profile 1export PATH=&quot;$PATH:/Users/vincexie/go/src/github.com/ethereum/go-ethereum/build/bin&quot; 12source ~/.bash_profileecho $PATH 查看本机外网ip1dig +short myip.opendns.com @resolver1.opendn">
 
 
 
@@ -248,8 +248,9 @@
         
         
           <h4 id="添加环境"><a href="#添加环境" class="headerlink" title="添加环境"></a><a href="https://www.jianshu.com/p/e6396fab1879" target="_blank" rel="noopener">添加环境</a></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bash_profile</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:/Users/vincexie/ethereum/go-ethereum/build/bin"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">"<span class="variable">$PATH</span>:/Users/vincexie/go/src/github.com/ethereum/go-ethereum/build/bin"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<h4 id="查看本机外网ip"><a href="#查看本机外网ip" class="headerlink" title="查看本机外网ip"></a>查看本机外网ip</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig +short myip.opendns.com @resolver1.opendns.com</span><br></pre></td></tr></table></figure>
 <h4 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i tcp:3000</span><br></pre></td></tr></table></figure>
 <h4 id="搜索字符"><a href="#搜索字符" class="headerlink" title="搜索字符"></a>搜索字符</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grep -B 1 -A 2 PATCH task-02.log</span><br><span class="line">cat task-02.log | grep -B 1 -A 2 PATCH</span><br></pre></td></tr></table></figure>
 <h4 id="osx上传至服务器"><a href="#osx上传至服务器" class="headerlink" title="osx上传至服务器"></a>osx上传至服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r  -P 36000 /Users/vincexie/go/src/github.com/ethereum/go-ethereum/testnet  root@119.29.226.45:/root/ethereum/testnet</span><br></pre></td></tr></table></figure>
@@ -342,7 +343,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -355,7 +356,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -364,7 +365,7 @@
           </nav>
 
                     		<div class="category-all">
-                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/以太坊/">以太坊</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
                     		</div>
           
 
@@ -429,7 +430,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加环境"><span class="nav-number">1.</span> <span class="nav-text">添加环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看端口占用"><span class="nav-number">2.</span> <span class="nav-text">查看端口占用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索字符"><span class="nav-number">3.</span> <span class="nav-text">搜索字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#osx上传至服务器"><span class="nav-number">4.</span> <span class="nav-text">osx上传至服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载文件"><span class="nav-number">5.</span> <span class="nav-text">下载文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统管理"><span class="nav-number"></span> <span class="nav-text">系统管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看磁盘"><span class="nav-number">1.</span> <span class="nav-text">查看磁盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看cpu和内存"><span class="nav-number">2.</span> <span class="nav-text">查看cpu和内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分配swap"><span class="nav-number">3.</span> <span class="nav-text">分配swap</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加环境"><span class="nav-number">1.</span> <span class="nav-text">添加环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看本机外网ip"><span class="nav-number">2.</span> <span class="nav-text">查看本机外网ip</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看端口占用"><span class="nav-number">3.</span> <span class="nav-text">查看端口占用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搜索字符"><span class="nav-number">4.</span> <span class="nav-text">搜索字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#osx上传至服务器"><span class="nav-number">5.</span> <span class="nav-text">osx上传至服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载文件"><span class="nav-number">6.</span> <span class="nav-text">下载文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统管理"><span class="nav-number"></span> <span class="nav-text">系统管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看磁盘"><span class="nav-number">1.</span> <span class="nav-text">查看磁盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看cpu和内存"><span class="nav-number">2.</span> <span class="nav-text">查看cpu和内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分配swap"><span class="nav-number">3.</span> <span class="nav-text">分配swap</span></a></li></ol></div>
             
 
           </div>

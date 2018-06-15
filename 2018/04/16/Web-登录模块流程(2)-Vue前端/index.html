@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Vue," />
+  <meta name="keywords" content="Nodejs,Vue," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。  vue-headful 设置标题、关键字等    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时">
-<meta name="keywords" content="Vue">
+<meta name="description" content="前言服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。 通过请求删除cookie更安全 服务端httpOnly设置app.js 12345678app.use(session(&amp;#123;	secret: config.se">
+<meta name="keywords" content="Nodejs,Vue">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vue优秀插件">
-<meta property="og:url" content="http://yoursite.com/2018/04/16/Vue优秀插件/index.html">
+<meta property="og:title" content="Web-登录模块流程(2)-Vue前端">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/Web-登录模块流程(2)-Vue前端/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。  vue-headful 设置标题、关键字等    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时">
+<meta property="og:description" content="前言服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。 通过请求删除cookie更安全 服务端httpOnly设置app.js 12345678app.use(session(&amp;#123;	secret: config.se">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-16T03:35:03.200Z">
+<meta property="og:updated_time" content="2018-05-16T03:36:13.263Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vue优秀插件">
-<meta name="twitter:description" content="前言都是实际项目中亲测好用的插件。作用于游戏直播吧。  bootstrap-vue 整体的ui框架，可同时作用于手机端。  vue-headful 设置标题、关键字等    vue-cookie 对cookie的操作。  vue-seesion 用来存放本地信息，可存放用户登录态。  vue-notification 超级好用的通知插件，不支持填入信息，支持自动消失。  moment.js 用于时">
+<meta name="twitter:title" content="Web-登录模块流程(2)-Vue前端">
+<meta name="twitter:description" content="前言服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。 通过请求删除cookie更安全 服务端httpOnly设置app.js 12345678app.use(session(&amp;#123;	secret: config.se">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/16/Vue优秀插件/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/16/Web-登录模块流程(2)-Vue前端/"/>
 
 
 
 
 
-  <title>Vue优秀插件 | 谢志海的博客</title>
+  <title>Web-登录模块流程(2)-Vue前端 | 谢志海的博客</title>
   
 
 
@@ -243,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Vue优秀插件/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Web-登录模块流程(2)-Vue前端/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -260,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Vue优秀插件</h1>
+          <h1 class="post-title" itemprop="name headline">Web-登录模块流程(2)-Vue前端</h1>
         
 
         <div class="post-meta">
@@ -272,7 +272,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:44:19+08:00">
                 2018-04-16
               </time>
             
@@ -310,29 +310,18 @@
       
 
       
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
-<ul>
-<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
-<p>整体的ui框架，可同时作用于手机端。</p>
-</li>
-<li><p><a href="https://github.com/troxler/vue-headful" target="_blank" rel="noopener">vue-headful</a></p>
-<p>设置标题、关键字等</p>
-</li>
-</ul>
-<ul>
-<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
-<p>对cookie的操作。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
-<p>用来存放本地信息，可存放用户登录态。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
-<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
-</li>
-<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
-<p>用于时间处理以及显示。</p>
-</li>
-</ul>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。</p>
+<p><strong>通过请求删除cookie更安全</strong></p>
+<h3 id="服务端httpOnly设置"><a href="#服务端httpOnly设置" class="headerlink" title="服务端httpOnly设置"></a>服务端httpOnly设置</h3><p>app.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        httpOnly:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
+<p>middlewares/auth.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">false</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用vue-session和vue-cookie"><a href="#使用vue-session和vue-cookie" class="headerlink" title="使用vue-session和vue-cookie"></a>使用vue-session和vue-cookie</h3><p>使用vue-session记录信息和vue-cookie删除cookie</p>
+<p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-session官方文档</a></p>
+<p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie官方文档</a></p>
+<h4 id="检查登录"><a href="#检查登录" class="headerlink" title="检查登录"></a>检查登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkLogin()&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.$session.get(<span class="string">'user'</span>))&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = <span class="keyword">this</span>.$session.get(<span class="string">'user'</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<h4 id="登录或注册成功后"><a href="#登录或注册成功后" class="headerlink" title="登录或注册成功后"></a>登录或注册成功后</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that.$session.set(<span class="string">'user'</span>,res.body)</span><br></pre></td></tr></table></figure>
+<h4 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">logout ()&#123;</span><br><span class="line">  <span class="keyword">this</span>.$session.destroy();</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'server'</span>);</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'connect.sid'</span>);</span><br><span class="line">  <span class="keyword">this</span>.checkLogin();</span><br><span class="line">  <span class="keyword">this</span>.$notify(&#123;</span><br><span class="line">    type: <span class="string">'success'</span>,</span><br><span class="line">    title: <span class="string">'已经退出'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -350,6 +339,8 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
+          
             <a href="/tags/Vue/" rel="tag"># Vue</a>
           
         </div>
@@ -363,8 +354,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/16/Web-登录模块流程(2)-Vue前端/" rel="next" title="Web-登录模块流程(2)-Vue前端">
-                <i class="fa fa-chevron-left"></i> Web-登录模块流程(2)-Vue前端
+              <a href="/2018/04/09/Web-登录模块流程(1)-Express后端/" rel="next" title="Web-登录模块流程(1)-后端">
+                <i class="fa fa-chevron-left"></i> Web-登录模块流程(1)-后端
               </a>
             
           </div>
@@ -373,8 +364,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/16/Nodejs-时间处理/" rel="prev" title="Nodejs-时间处理">
-                Nodejs-时间处理 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/16/Vue优秀插件/" rel="prev" title="Vue优秀插件">
+                Vue优秀插件 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -543,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端httpOnly设置"><span class="nav-number">2.</span> <span class="nav-text">服务端httpOnly设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vue-session和vue-cookie"><span class="nav-number">3.</span> <span class="nav-text">使用vue-session和vue-cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检查登录"><span class="nav-number">3.1.</span> <span class="nav-text">检查登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#登录或注册成功后"><span class="nav-number">3.2.</span> <span class="nav-text">登录或注册成功后</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#退出登录"><span class="nav-number">3.3.</span> <span class="nav-text">退出登录</span></a></li></ol></li></ol></div>
             
 
           </div>

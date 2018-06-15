@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Nodejs," />
 
 
 
@@ -79,16 +79,25 @@
 
 
 
-<meta name="description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="谢志海的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="内容主要分为三个部分，大触可以直接拉到文末看结论：  Process：介绍进程与 process 对象 child_process：介绍子进程 &amp;amp; IPC 与踩坑 cluster：负载实现简介与踩坑  1. Process首先是进程部分, 关于进程我们需要明确两个概念, 分别是：1）操作系统的的进程 （process）。 2）Node.js 的 process 对象。 1）操作系统的的进程">
+<meta name="keywords" content="Nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs多进程和env小结">
+<meta property="og:url" content="http://yoursite.com/2018/05/29/Nodejs多进程和env小结/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
+<meta property="og:description" content="内容主要分为三个部分，大触可以直接拉到文末看结论：  Process：介绍进程与 process 对象 child_process：介绍子进程 &amp;amp; IPC 与踩坑 cluster：负载实现简介与踩坑  1. Process首先是进程部分, 关于进程我们需要明确两个概念, 分别是：1）操作系统的的进程 （process）。 2）Node.js 的 process 对象。 1）操作系统的的进程">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1frs8jybv2qj30k008faaf.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1frs8jzep0qj30k00cuq3c.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1frs8jxtvgqj30k00dpglx.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcgy1frs8jx1yxdj30k00acq3z.jpg">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1frs8jxfok3j30k00gqgng.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1frs8jyy64xj30k00eiaas.jpg">
+<meta property="og:updated_time" content="2018-05-29T07:21:51.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谢志海的博客">
-<meta name="twitter:description" content="任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。">
+<meta name="twitter:title" content="Nodejs多进程和env小结">
+<meta name="twitter:description" content="内容主要分为三个部分，大触可以直接拉到文末看结论：  Process：介绍进程与 process 对象 child_process：介绍子进程 &amp;amp; IPC 与踩坑 cluster：负载实现简介与踩坑  1. Process首先是进程部分, 关于进程我们需要明确两个概念, 分别是：1）操作系统的的进程 （process）。 2）Node.js 的 process 对象。 1）操作系统的的进程">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1frs8jybv2qj30k008faaf.jpg">
 
 
 
@@ -118,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/29/Nodejs多进程和env小结/"/>
 
 
 
 
 
-  <title>谢志海的博客</title>
+  <title>Nodejs多进程和env小结 | 谢志海的博客</title>
   
 
 
@@ -143,8 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,9 +235,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -259,9 +267,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/29/Nodejs多进程和env小结/" itemprop="url">Nodejs多进程和env小结</a></h1>
+          <h1 class="post-title" itemprop="name headline">Nodejs多进程和env小结</h1>
         
 
         <div class="post-meta">
@@ -311,9 +317,7 @@
       
 
       
-        
-          
-            <p>内容主要分为三个部分，大触可以直接拉到文末看结论：</p>
+        <p>内容主要分为三个部分，大触可以直接拉到文末看结论：</p>
 <ul>
 <li>Process：介绍进程与 process 对象</li>
 <li>child_process：介绍子进程 &amp; IPC 与踩坑</li>
@@ -407,8 +411,6 @@
 </ul>
 <p>最后是广告时间，本文整理自 <a href="https://link.zhihu.com/?target=https%3A//github.com/ElemeFE/node-interview/tree/master/sections/zh-cn" target="_blank" rel="noopener">node-interview</a> 的进程专题 ，欢迎到 github 上来帮忙查漏补缺。</p>
 
-          
-        
       
     </div>
     
@@ -423,291 +425,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/Nodejs-异步获取以太坊所有区块数据/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/16/Nodejs-异步获取以太坊所有区块数据/" itemprop="url">Nodejs-异步获取以太坊所有区块数据</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T11:33:24+08:00">
-                2018-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/Nodejs/" rel="tag"># Nodejs</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>通过Eventproxy和async实现完美的重复、并发且带限制性的异步任务。</p>
-<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
-<li>异步获取区块链的总区块数。</li>
-<li>之后并发的遍历区块链获取每个区块的数据。</li>
-<li>不能一次性获取，rpc会堵塞，最多12个任务并发。</li>
-<li>出错后不能重复callback错误，只能callback（error）一次。</li>
-<li>获取后的数据按原来链的顺序排序</li>
-</ul>
-<p>代码如下</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取链上的所有区块</span></span><br><span class="line"><span class="comment"> * @param callback function(err,blocks)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> getAllBlocks = <span class="function"><span class="keyword">function</span> (<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> ep = <span class="keyword">new</span> eventproxy();</span><br><span class="line">    ep.fail(callback)</span><br><span class="line">    getBlockNumber(ep.done(<span class="string">'num'</span>))</span><br><span class="line">    <span class="comment">//获得区块数后触发</span></span><br><span class="line">    ep.on(<span class="string">'num'</span>,<span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">        ep.after(<span class="string">'get_block'</span>,num + <span class="number">1</span>,<span class="function"><span class="keyword">function</span> (<span class="params">blocks</span>) </span>&#123;</span><br><span class="line">            <span class="comment">//将区块按编号排序</span></span><br><span class="line">            <span class="keyword">async</span>.sortBy(blocks,<span class="function"><span class="keyword">function</span> (<span class="params">block,callback</span>) </span>&#123;</span><br><span class="line">                callback(<span class="literal">null</span>,block.number)</span><br><span class="line">            &#125;,callback)</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">//定义单个并发任务</span></span><br><span class="line">        <span class="keyword">var</span> task = <span class="function"><span class="keyword">function</span> (<span class="params">i,callback</span>) </span>&#123;</span><br><span class="line">            web3.eth.getBlock(i)</span><br><span class="line">                .then(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(data.number)</span><br><span class="line">                    ep.emit(<span class="string">'get_block'</span>,data)</span><br><span class="line">                    callback()</span><br><span class="line">                &#125;,<span class="function"><span class="keyword">function</span> (<span class="params">err</span>)</span>&#123;</span><br><span class="line">                    ep.throw(err)</span><br><span class="line">                    callback()</span><br><span class="line">                &#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开始并发任务</span></span><br><span class="line">        <span class="keyword">var</span> numTasks = []</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;=num;i++)&#123;</span><br><span class="line">            numTasks.push(i)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">async</span>.mapLimit(numTasks,<span class="number">12</span>,task);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li>Promise的catch不能直接ep.throw，会报错。</li>
-<li>async task必须有callback，才会触发后续的任务。这里的task callback只为结束任务。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
       
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/Web-Sticky-Footer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/16/Web-Sticky-Footer/" itemprop="url">Web-Sticky Footer(zt)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T11:27:04+08:00">
-                2018-05-16
-              </time>
+              <a href="/2018/05/16/Nodejs-异步获取以太坊所有区块数据/" rel="next" title="Nodejs-异步获取以太坊所有区块数据">
+                <i class="fa fa-chevron-left"></i> Nodejs-异步获取以太坊所有区块数据
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>做过网页开发的同学想必都遇到过这样尴尬的排版问题：<br>在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：</p>
-<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg" alt="img"></p>
-<p>笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。<br>本文将带大家重新认识这个常见的网页效果，以及一些可行的实现方案。</p>
-<h2 id="什么是-“Sticky-Footer”"><a href="#什么是-“Sticky-Footer”" class="headerlink" title="什么是 “Sticky Footer”"></a>什么是 “Sticky Footer”</h2><p>所谓 “Sticky Footer”，并不是什么新的前端概念和技术，它指的就是一种网页效果：<br>如果页面内容不足够长时，页脚固定在浏览器窗口的底部；如果内容足够长时，页脚固定在页面的最底部。<br><strong>总而言之，就是页脚一直处于最底</strong>，效果大致如图所示：</p>
-<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1frd0qga0kcj31880so749.jpg" alt="img"></p>
-<p>当然，实现这种效果的方法有很多种，其中有通过脚本计算的，有通过 CSS 处理的，脚本计算的方案我们不在本文探讨。<br>下面我们看看有哪些通过 CSS 可以实现且适用于移动端开发的方案，并分析其中的利弊。</p>
-<h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><p>假设我们页面的 HTML 结构是这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;!-- 页面主体内容区域 --&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;footer&quot;&gt;&lt;!-- 需要做到 Sticky Footer 效果的页脚 --&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="实现方案一：absolute"><a href="#实现方案一：absolute" class="headerlink" title="实现方案一：absolute"></a>实现方案一：absolute</h3><p>通过绝对定位处理应该是常见的方案，只要使得页脚一直定位在主容器预留占位位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    padding-bottom: 50px;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个方案需指定 html、body 100% 的高度，且 content 的 <code>padding-bottom</code> 需要与 footer 的 <code>height</code> 一致。</p>
-<h3 id="实现方案二：calc"><a href="#实现方案二：calc" class="headerlink" title="实现方案二：calc"></a>实现方案二：calc</h3><p>通过计算函数 calc 计算（视窗高度 - 页脚高度）赋予内容区最小高度，不需要任何额外样式处理，代码量最少、最简单。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.content &#123;</span><br><span class="line">    min-height: calc(100vh - 50px);</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果不需考虑 <code>calc()</code> 以及 <code>vh</code> 单位的兼容情况，这是个很理想的实现方案。<br>同样的问题是 footer 的高度值需要与 content 其中的计算值一致。</p>
-<h3 id="实现方案三：table"><a href="#实现方案三：table" class="headerlink" title="实现方案三：table"></a>实现方案三：table</h3><p>通过 table 属性使得页面以表格的形态呈现。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    display: table;</span><br><span class="line">    width: 100%;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    display: table-row;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，使用 table 方案存在一个比较常见的样式限制，通常 margin、padding、border 等属性会不符合预期。<br>笔者不建议使用这个方案。当然，问题也是可以解决的：别把其他样式写在 table 上。</p>
-<h3 id="实现方案四：Flexbox"><a href="#实现方案四：Flexbox" class="headerlink" title="实现方案四：Flexbox"></a>实现方案四：Flexbox</h3><p>Flexbox 是非常适合实现这种效果的，使用 Flexbox 实现不仅不需要任何额外的元素，而且允许页脚的高度是可变的。</p>
-<p>虽然大多数 Flexbox 布局常用于水平方向布局，但别忘了实际上它也可用于垂直布局，所以你需要做的是将垂直部分包装在一个 Flex 容器中，并选择要扩展的部分，他们将自动占用其容器中的所有可用空间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">html &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">body &#123;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是想要兼容各种系统设备，需要兼顾 <code>flex</code> 的兼容写法。</p>
-<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>以上几种实现方案，笔者都在项目中尝试过，每个实现的方法其实大同小异，同时也都有自己的利弊。<br>其中有的方案存在限制性问题，需要固定页脚高度；其中有的方案需要添加额外的元素或者需要 Hack 手段。同学们可以根据页面具体需求，选择最适合的方案。</p>
-<p>当然，技术是不断更新的，也许还有很多不同的、更好的方案。但相信大家最终目都是一样的，为了更好的用户体验！</p>
-<p>参考资料：<br><a href="https://css-tricks.com/couple-takes-sticky-footer/" target="_blank" rel="noopener">https://css-tricks.com/couple-takes-sticky-footer/</a><br><a href="http://www.w3cplus.com/css3/css-secrets/sticky-footers.html" target="_blank" rel="noopener">http://www.w3cplus.com/css3/css-secrets/sticky-footers.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -717,14 +464,11 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -732,6 +476,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -752,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -849,6 +606,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Process"><span class="nav-number">1.</span> <span class="nav-text">1. Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1）操作系统的的进程"><span class="nav-number">2.</span> <span class="nav-text">1）操作系统的的进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2）process-对象"><span class="nav-number">3.</span> <span class="nav-text">2）process 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Child-Process"><span class="nav-number">4.</span> <span class="nav-text">2. Child Process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC"><span class="nav-number">5.</span> <span class="nav-text">IPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js-内建-IPC-的问题"><span class="nav-number">6.</span> <span class="nav-text">Node.js 内建 IPC 的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Cluster"><span class="nav-number">7.</span> <span class="nav-text">3. Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -989,6 +762,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

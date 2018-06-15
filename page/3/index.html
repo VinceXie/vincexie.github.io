@@ -242,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/登录模块流程(2)-Vue前端/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Nodejs-时间处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -261,7 +261,278 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/16/登录模块流程(2)-Vue前端/" itemprop="url">登录模块流程(2)-Vue前端</a></h1>
+                <a class="post-title-link" href="/2018/04/16/Nodejs-时间处理/" itemprop="url">Nodejs-时间处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:46:45+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>日期的生成与设置使用new Date()，网页上的显示使用moment。</p>
+<h4 id="获取今天和之后的信息"><a href="#获取今天和之后的信息" class="headerlink" title="获取今天和之后的信息"></a>获取今天和之后的信息</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  date.setHours(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  MessageProxy.getMessageAfterDate(&#123;&#125;,date,ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">		res.send(message);</span><br><span class="line">	&#125;));</span><br><span class="line"><span class="comment">//数据库操作如下</span></span><br><span class="line">  Message.find(_.assign(data,&#123;<span class="attr">time</span>:&#123;<span class="attr">$gte</span>:date&#125;&#125;),<span class="literal">null</span>,&#123;<span class="attr">sort</span>:&#123;<span class="attr">time</span>:<span class="number">1</span>&#125;&#125;,callback)</span><br></pre></td></tr></table></figure>
+<h4 id="从Date那里获取24进制时间"><a href="#从Date那里获取24进制时间" class="headerlink" title="从Date那里获取24进制时间"></a>从Date那里获取24进制时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(item.time).toLocaleTimeString(<span class="string">'en-US'</span>, &#123; <span class="attr">hour12</span>: <span class="literal">false</span>,</span><br><span class="line">          hour: <span class="string">"numeric"</span>,</span><br><span class="line">          minute: <span class="string">"numeric"</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="拼接Date时间"><a href="#拼接Date时间" class="headerlink" title="拼接Date时间"></a>拼接Date时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="keyword">this</span>.date+<span class="string">' '</span>+<span class="keyword">this</span>.time)</span><br></pre></td></tr></table></figure>
+<h3 id="moment的使用"><a href="#moment的使用" class="headerlink" title="moment的使用"></a><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment的使用</a></h3><p>日期显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).calendar()</span><br></pre></td></tr></table></figure>
+<p>24小时显示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).format(<span class="string">'a HH:mm'</span>)</span><br></pre></td></tr></table></figure>
+<p>增加一天</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment().add(<span class="number">1</span>,<span class="string">'days'</span>).format(<span class="string">"MMMDo"</span>)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Vue优秀插件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/Vue优秀插件/" itemprop="url">Vue优秀插件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
+<ul>
+<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
+<p>整体的ui框架，可同时作用于手机端。</p>
+</li>
+<li><p><a href="https://github.com/troxler/vue-headful" target="_blank" rel="noopener">vue-headful</a></p>
+<p>设置标题、关键字等</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
+<p>对cookie的操作。</p>
+</li>
+<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
+<p>用来存放本地信息，可存放用户登录态。</p>
+</li>
+<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
+<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
+</li>
+<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
+<p>用于时间处理以及显示。</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Web-登录模块流程(2)-Vue前端/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/Web-登录模块流程(2)-Vue前端/" itemprop="url">Web-登录模块流程(2)-Vue前端</a></h1>
         
 
         <div class="post-meta">
@@ -360,392 +631,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/登录模块流程(1)-Express后端/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/09/登录模块流程(1)-Express后端/" itemprop="url">登录模块流程(1)-后端</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T16:59:50+08:00">
-                2018-04-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1fq6j9c5vwkj31ie0ok42b.jpg" alt="截图"></p>
-<h3 id="Oauth例子"><a href="#Oauth例子" class="headerlink" title="Oauth例子"></a>Oauth例子</h3><p><a href="https://github.com/mekentosj/oauth2-example" target="_blank" rel="noopener">https://github.com/mekentosj/oauth2-example</a></p>
-<p><a href="http://www.mobilecode.cn/2015/10/28/node_oauth/" target="_blank" rel="noopener">http://www.mobilecode.cn/2015/10/28/node_oauth/</a></p>
-<h3 id="相关文件"><a href="#相关文件" class="headerlink" title="相关文件"></a>相关文件</h3><p><a href="https://gitee.com/vincexie/server/blob/master/middlewares/auth.js" target="_blank" rel="noopener">auth.js</a></p>
-<p><a href="https://gitee.com/vincexie/server/blob/master/api/v1/sign.js" target="_blank" rel="noopener">sign.js</a></p>
-<h4 id="备忘"><a href="#备忘" class="headerlink" title="备忘"></a>备忘</h4><p>用户返回信息要通过lodash的pick，不然会直接返回密码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.send(_.pick(user,<span class="string">'email'</span>,<span class="string">'isAdmin'</span>));</span><br></pre></td></tr></table></figure>
-<h3 id="前置"><a href="#前置" class="headerlink" title="前置"></a>前置</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line">app.use(cookieParser(config.session_secret));</span><br></pre></td></tr></table></figure>
-<h3 id="Cookie中的connect-sid"><a href="#Cookie中的connect-sid" class="headerlink" title="Cookie中的connect.sid"></a>Cookie中的connect.sid</h3><p>通过这个绑定connect.sid与req.session。重启服务器后只有connect.sid也不能认证通过，需要重新登录。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据cookie给req.session赋值</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<h3 id="验证用户是否登录"><a href="#验证用户是否登录" class="headerlink" title="验证用户是否登录"></a>验证用户是否登录</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(auth.authUser);</span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 验证用户是否登录，req.seesion有数据不操作，req.seesion没数据cookie有数据则查数据，</span></span><br><span class="line"><span class="comment"> * 都没有数据的话则下一步。</span></span><br><span class="line"><span class="comment"> * @param req</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> * @param next</span></span><br><span class="line"><span class="comment"> * @returns &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">exports.authUser = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> ep = <span class="keyword">new</span> eventproxy();</span><br><span class="line">	ep.fail(next);</span><br><span class="line">	res.locals.current_user = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 保证数据可用</span></span><br><span class="line">	ep.all(<span class="string">'get_user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">"all"</span>)</span><br><span class="line">		res.locals.current_user = req.session.user = <span class="keyword">new</span> UserModel(user);</span><br><span class="line">		next();</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 之前已登录，获取数据</span></span><br><span class="line">	<span class="keyword">if</span> (req.session.user) &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(req.session.user)</span><br><span class="line">		ep.emit(<span class="string">'get_user'</span>, req.session.user);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 第一次获取数据，cookie有数据的在数据库查询</span></span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">var</span> auth_token = req.signedCookies[config.auth_cookie_name];</span><br><span class="line">		<span class="keyword">if</span> (!auth_token) &#123;</span><br><span class="line">			<span class="keyword">return</span> next();</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> auth = auth_token.split(<span class="string">'$$$$'</span>);</span><br><span class="line">		<span class="keyword">var</span> user_id = auth[<span class="number">0</span>];</span><br><span class="line">		UserProxy.getUserById(user_id, ep.done(<span class="string">'get_user'</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="登录授权中间件"><a href="#登录授权中间件" class="headerlink" title="登录授权中间件"></a>登录授权中间件</h3><p>部分需要授权的操作则加中间件</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/user/:email'</span>,auth.userRequired,user.get)</span><br></pre></td></tr></table></figure>
-<p>根据上一步的验证决定是否放行<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">exports.userRequired = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!req.session || !req.session.user || !req.session.user._id) &#123;</span><br><span class="line">		<span class="keyword">return</span> res.status(<span class="number">403</span>).send(&#123;<span class="attr">error</span>:<span class="string">'forbidden!'</span>&#125;);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// console.log(req.session.user._id)</span></span><br><span class="line">	next();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h3 id="写入session"><a href="#写入session" class="headerlink" title="写入session"></a>写入session</h3><p>用于注册或登录后</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 生成session</span></span><br><span class="line"><span class="comment"> * @param user</span></span><br><span class="line"><span class="comment"> * @param res</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">true</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="登录示例"><a href="#登录示例" class="headerlink" title="登录示例"></a>登录示例</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">exports.login = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> email = validator.trim(req.body.email).toLowerCase();</span><br><span class="line">	<span class="keyword">var</span> password      = validator.trim(req.body.password);</span><br><span class="line">	<span class="keyword">var</span> ep        = <span class="keyword">new</span> eventproxy();</span><br><span class="line"></span><br><span class="line">	ep.fail(next);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!email || !password) &#123;</span><br><span class="line">		res.status(<span class="number">422</span>);</span><br><span class="line">		<span class="keyword">return</span> res.send(&#123;<span class="attr">error</span>: <span class="string">'信息不完整。'</span> &#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> getUser = User.getUserByMail;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	ep.on(<span class="string">'login_error'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">login_error</span>) </span>&#123;</span><br><span class="line">		res.status(<span class="number">403</span>);</span><br><span class="line">		res.send(&#123;<span class="attr">error</span>: <span class="string">'邮箱或密码错误'</span>&#125;);</span><br><span class="line">	&#125;);</span><br><span class="line"></span><br><span class="line">	getUser(email, <span class="function"><span class="keyword">function</span> (<span class="params">err, user</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (err) &#123;</span><br><span class="line">			<span class="keyword">return</span> next(err);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!user) &#123;</span><br><span class="line">			<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> passhash = user.password;</span><br><span class="line">		tools.bcompare(password, passhash, ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">bool</span>) </span>&#123;</span><br><span class="line">			<span class="keyword">if</span> (!bool) &#123;</span><br><span class="line">				<span class="keyword">return</span> ep.emit(<span class="string">'login_error'</span>);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			authMiddleWare.gen_session(user, res);</span><br><span class="line">			res.send(_.pick(user,<span class="string">'email'</span>,<span class="string">'balance'</span>));</span><br><span class="line">			<span class="comment">// store session cookie</span></span><br><span class="line">			<span class="comment">//authMiddleWare.gen_session(user, res);</span></span><br><span class="line"></span><br><span class="line">		&#125;));</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/pm2部署nodejs(zt)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="谢志海">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="谢志海的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/pm2部署nodejs(zt)/" itemprop="url">pm2部署nodejs(zt)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T17:10:43+08:00">
-                2018-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>pm2官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start/" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start/</a></p>
-</blockquote>
-<h1 id="简单教程"><a href="#简单教程" class="headerlink" title="简单教程"></a>简单教程</h1><p>首先需要安装pm2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-<p>运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pm2 start npm -- start</span><br><span class="line">pm2 start npm --name <span class="string">"Your APP Name"</span> -- start</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
-<p>初次安装并运行，会有一个高大上的界面：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-a87d9f022b1bad3b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/556" alt="img"></p>
-<p>高大上的界面</p>
-<p>直接我们介绍过<a href="https://www.jianshu.com/p/82a64aee0710" target="_blank" rel="noopener">forever</a>，那么pm2与forever相比较有哪些高大上的功能呢？我们看一下对比表格：</p>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Forever</th>
-<th>PM2</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Keep Alive</td>
-<td>✔</td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Coffeescript</td>
-<td>✔</td>
-<td></td>
-</tr>
-<tr>
-<td>Log aggregation</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>API</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Terminal monitoring</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>Clustering</td>
-<td></td>
-<td>✔</td>
-</tr>
-<tr>
-<td>JSON configuration</td>
-<td></td>
-<td>✔</td>
-</tr>
-</tbody>
-</table>
-<p>我们可以很直观的看出，pm2相比较Forever，功能更加强大一些。</p>
-<h1 id="查看运行状态"><a href="#查看运行状态" class="headerlink" title="查看运行状态"></a>查看运行状态</h1><p>我们可以通过简单的命令查看应用的运行状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
-<p>效果如下：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-460416a1351fa20b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/632" alt="img"></p>
-<p>运行状态</p>
-<blockquote>
-<p>ANodeBlog应用正在运行，pid为31480，并且占用内存为89.113 MB。</p>
-</blockquote>
-<h2 id="追踪资源运行情况"><a href="#追踪资源运行情况" class="headerlink" title="追踪资源运行情况"></a>追踪资源运行情况</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
-<p>会看到应用资源的实时运行情况</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-d9b61b829f16f467.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt="img"></p>
-<p>实时运行情况</p>
-<h2 id="查看应用详细部署状态"><a href="#查看应用详细部署状态" class="headerlink" title="查看应用详细部署状态"></a>查看应用详细部署状态</h2><p>如果我们想要查看一个应用详细的运行状态，比如<code>ANodeBlog</code>的状态，可以运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe 3</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>“3”是指App Id。</p>
-</blockquote>
-<p>结果如下：</p>
-<p><img src="//upload-images.jianshu.io/upload_images/31920-7d990f92952b28c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/464" alt="img"></p>
-<p>详细运行状态</p>
-<h1 id="查看日志"><a href="#查看日志" class="headerlink" title="查看日志"></a>查看日志</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
-<p>系统会打印出详细的logs。</p>
-<h1 id="重启应用"><a href="#重启应用" class="headerlink" title="重启应用"></a>重启应用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart appId</span><br></pre></td></tr></table></figure>
-<h1 id="停止应用"><a href="#停止应用" class="headerlink" title="停止应用"></a>停止应用</h1><p>想要终止应用，只需要运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop app.js</span><br></pre></td></tr></table></figure>
-<h1 id="强健的API"><a href="#强健的API" class="headerlink" title="强健的API"></a>强健的API</h1><p>在项目中运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
-<p>然后浏览器访问<a href="https://link.jianshu.com?t=http://localhost:9615" target="_blank" rel="noopener">http://localhost:9615</a> 你会有惊喜！</p>
-<h1 id="预定义运行配置文件"><a href="#预定义运行配置文件" class="headerlink" title="预定义运行配置文件"></a>预定义运行配置文件</h1><p>我们可以预定义一个配置文件，然后制定运行这个配置文件，比如我们定义一个文件<code>process.json</code>，内容如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;apps&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;ANodeBlog&quot;,</span><br><span class="line">      &quot;script&quot;: &quot;bin/www&quot;,</span><br><span class="line">      &quot;watch&quot;: &quot;../&quot;,</span><br><span class="line">      &quot;log_date_format&quot;: &quot;YYYY-MM-DD HH:mm Z&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后可以通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start process.json</span><br></pre></td></tr></table></figure>
-<p>运行这个App。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>常用命令总结如下：</p>
-<ol>
-<li>安装pm2</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pm2</span><br></pre></td></tr></table></figure>
-<ol>
-<li>启动应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start app.js</span><br></pre></td></tr></table></figure>
-<ol>
-<li>列出所有应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 list</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看资源消耗</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 monit</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看某一个应用状态</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 describe [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>查看所有日志</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 logs</span><br></pre></td></tr></table></figure>
-<ol>
-<li>重启应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 restart [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>停止应用</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 stop [app id]</span><br></pre></td></tr></table></figure>
-<ol>
-<li>开启api访问</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 web</span><br></pre></td></tr></table></figure>
-<p>更多pm2内容请参考官方文档：<a href="https://link.jianshu.com?t=http://pm2.keymetrics.io/docs/usage/quick-start" target="_blank" rel="noopener">http://pm2.keymetrics.io/docs/usage/quick-start</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -800,7 +685,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -813,7 +698,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -822,7 +707,7 @@
           </nav>
 
                     		<div class="category-all">
-                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/以太坊/">以太坊</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
                     		</div>
           
 

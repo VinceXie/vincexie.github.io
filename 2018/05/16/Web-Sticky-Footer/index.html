@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Web,Vue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
+<meta name="keywords" content="Web,Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web-Sticky Footer(zt)">
+<meta property="og:url" content="http://yoursite.com/2018/05/16/Web-Sticky-Footer/index.html">
+<meta property="og:site_name" content="谢志海的博客">
+<meta property="og:description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tNc79gy1frd0qga0kcj31880so749.jpg">
+<meta property="og:updated_time" content="2018-05-16T03:35:30.810Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web-Sticky Footer(zt)">
+<meta name="twitter:description" content="写在前面做过网页开发的同学想必都遇到过这样尴尬的排版问题：在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：  笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。本文将带大家重新认识这个常见的">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/16/Web-Sticky-Footer/"/>
+
+
+
+
+
+  <title>Web-Sticky Footer(zt) | 谢志海的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">谢志海的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术改变生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/Web-Sticky-Footer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Web-Sticky Footer(zt)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T11:27:04+08:00">
+                2018-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>做过网页开发的同学想必都遇到过这样尴尬的排版问题：<br>在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg" alt="img"></p>
+<p>笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。<br>本文将带大家重新认识这个常见的网页效果，以及一些可行的实现方案。</p>
+<h2 id="什么是-“Sticky-Footer”"><a href="#什么是-“Sticky-Footer”" class="headerlink" title="什么是 “Sticky Footer”"></a>什么是 “Sticky Footer”</h2><p>所谓 “Sticky Footer”，并不是什么新的前端概念和技术，它指的就是一种网页效果：<br>如果页面内容不足够长时，页脚固定在浏览器窗口的底部；如果内容足够长时，页脚固定在页面的最底部。<br><strong>总而言之，就是页脚一直处于最底</strong>，效果大致如图所示：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1frd0qga0kcj31880so749.jpg" alt="img"></p>
+<p>当然，实现这种效果的方法有很多种，其中有通过脚本计算的，有通过 CSS 处理的，脚本计算的方案我们不在本文探讨。<br>下面我们看看有哪些通过 CSS 可以实现且适用于移动端开发的方案，并分析其中的利弊。</p>
+<h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><p>假设我们页面的 HTML 结构是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;!-- 页面主体内容区域 --&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;footer&quot;&gt;&lt;!-- 需要做到 Sticky Footer 效果的页脚 --&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方案一：absolute"><a href="#实现方案一：absolute" class="headerlink" title="实现方案一：absolute"></a>实现方案一：absolute</h3><p>通过绝对定位处理应该是常见的方案，只要使得页脚一直定位在主容器预留占位位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    padding-bottom: 50px;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方案需指定 html、body 100% 的高度，且 content 的 <code>padding-bottom</code> 需要与 footer 的 <code>height</code> 一致。</p>
+<h3 id="实现方案二：calc"><a href="#实现方案二：calc" class="headerlink" title="实现方案二：calc"></a>实现方案二：calc</h3><p>通过计算函数 calc 计算（视窗高度 - 页脚高度）赋予内容区最小高度，不需要任何额外样式处理，代码量最少、最简单。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.content &#123;</span><br><span class="line">    min-height: calc(100vh - 50px);</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不需考虑 <code>calc()</code> 以及 <code>vh</code> 单位的兼容情况，这是个很理想的实现方案。<br>同样的问题是 footer 的高度值需要与 content 其中的计算值一致。</p>
+<h3 id="实现方案三：table"><a href="#实现方案三：table" class="headerlink" title="实现方案三：table"></a>实现方案三：table</h3><p>通过 table 属性使得页面以表格的形态呈现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    display: table;</span><br><span class="line">    width: 100%;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    display: table-row;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，使用 table 方案存在一个比较常见的样式限制，通常 margin、padding、border 等属性会不符合预期。<br>笔者不建议使用这个方案。当然，问题也是可以解决的：别把其他样式写在 table 上。</p>
+<h3 id="实现方案四：Flexbox"><a href="#实现方案四：Flexbox" class="headerlink" title="实现方案四：Flexbox"></a>实现方案四：Flexbox</h3><p>Flexbox 是非常适合实现这种效果的，使用 Flexbox 实现不仅不需要任何额外的元素，而且允许页脚的高度是可变的。</p>
+<p>虽然大多数 Flexbox 布局常用于水平方向布局，但别忘了实际上它也可用于垂直布局，所以你需要做的是将垂直部分包装在一个 Flex 容器中，并选择要扩展的部分，他们将自动占用其容器中的所有可用空间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">html &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">body &#123;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是想要兼容各种系统设备，需要兼顾 <code>flex</code> 的兼容写法。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>以上几种实现方案，笔者都在项目中尝试过，每个实现的方法其实大同小异，同时也都有自己的利弊。<br>其中有的方案存在限制性问题，需要固定页脚高度；其中有的方案需要添加额外的元素或者需要 Hack 手段。同学们可以根据页面具体需求，选择最适合的方案。</p>
+<p>当然，技术是不断更新的，也许还有很多不同的、更好的方案。但相信大家最终目都是一样的，为了更好的用户体验！</p>
+<p>参考资料：<br><a href="https://css-tricks.com/couple-takes-sticky-footer/" target="_blank" rel="noopener">https://css-tricks.com/couple-takes-sticky-footer/</a><br><a href="http://www.w3cplus.com/css3/css-secrets/sticky-footers.html" target="_blank" rel="noopener">http://www.w3cplus.com/css3/css-secrets/sticky-footers.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/14/以太坊研究5-测试期间bug/" rel="next" title="以太坊研究5-测试期间bug">
+                <i class="fa fa-chevron-left"></i> 以太坊研究5-测试期间bug
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/16/Nodejs-异步获取以太坊所有区块数据/" rel="prev" title="Nodejs-异步获取以太坊所有区块数据">
+                Nodejs-异步获取以太坊所有区块数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4"
+                alt="谢志海" />
+            
+              <p class="site-author-name" itemprop="name">谢志海</p>
+              <p class="site-description motion-element" itemprop="description">任职于腾讯，聊一聊区块链、Nodejs、Vue、Docker与新技术。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+                    		<div class="category-all">
+                    		  <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web/">Web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/以太坊/">以太坊</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+                    		</div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/VinceXie" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:274167515@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://wpa.qq.com/msgrd?v=3&uin=274167515&site=qq&menu=yes" target="_blank" title="QQ">
+                      
+                        <i class="fa fa-fw fa-qq"></i></a>
+                  </span>
+                
+            </div>
+          
+
+
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://web3js.readthedocs.io/en/1.0/index.html" title="以太坊web3.js" target="_blank">以太坊web3.js</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-“Sticky-Footer”"><span class="nav-number">2.</span> <span class="nav-text">什么是 “Sticky Footer”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何实现"><span class="nav-number">3.</span> <span class="nav-text">如何实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案一：absolute"><span class="nav-number">3.1.</span> <span class="nav-text">实现方案一：absolute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案二：calc"><span class="nav-number">3.2.</span> <span class="nav-text">实现方案二：calc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案三：table"><span class="nav-number">3.3.</span> <span class="nav-text">实现方案三：table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方案四：Flexbox"><span class="nav-number">3.4.</span> <span class="nav-text">实现方案四：Flexbox</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">4.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">谢志海</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

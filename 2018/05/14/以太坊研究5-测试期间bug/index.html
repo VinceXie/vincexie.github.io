@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="区块链," />
 
 
 
@@ -79,19 +79,18 @@
 
 
 
-<meta name="description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Git常用命令">
-<meta property="og:url" content="http://yoursite.com/Git常用命令.html">
+<meta name="description" content="前言 解决3个中心节点联通后，txpool并不同步。 解决3个中心节点联通后，并不挖矿的情况。 poa挖矿需要一半以上的节点签名才可运作。  3个中心节点均联通，但不打包。 txpool并不同步出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。 解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。 不挖矿出现原因：unlock acco">
+<meta name="keywords" content="区块链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以太坊研究5-测试期间bug">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/以太坊研究5-测试期间bug/index.html">
 <meta property="og:site_name" content="谢志海的博客">
-<meta property="og:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
+<meta property="og:description" content="前言 解决3个中心节点联通后，txpool并不同步。 解决3个中心节点联通后，并不挖矿的情况。 poa挖矿需要一半以上的节点签名才可运作。  3个中心节点均联通，但不打包。 txpool并不同步出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。 解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。 不挖矿出现原因：unlock acco">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
-<meta property="og:updated_time" content="2018-05-17T08:24:46.503Z">
+<meta property="og:updated_time" content="2018-06-06T07:40:31.384Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git常用命令">
-<meta name="twitter:description" content="忽略已经被提交的文件正确的做法应该是：git rm --cached logs/xx.log，然后更新 .gitignore 忽略掉目标文件，最后 git commit -m &amp;quot;We really don&amp;#39;t want Git to track this anymore!&amp;quot; 合并提交1git rebase -i 4287845   不停选择用以前的提交来squash 删">
-<meta name="twitter:image" content="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg">
+<meta name="twitter:title" content="以太坊研究5-测试期间bug">
+<meta name="twitter:description" content="前言 解决3个中心节点联通后，txpool并不同步。 解决3个中心节点联通后，并不挖矿的情况。 poa挖矿需要一半以上的节点签名才可运作。  3个中心节点均联通，但不打包。 txpool并不同步出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。 解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。 不挖矿出现原因：unlock acco">
 
 
 
@@ -121,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/Git常用命令.html"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/14/以太坊研究5-测试期间bug/"/>
 
 
 
 
 
-  <title>Git常用命令 | 谢志海的博客</title>
+  <title>以太坊研究5-测试期间bug | 谢志海的博客</title>
   
 
 
@@ -232,43 +231,161 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/以太坊研究5-测试期间bug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="谢志海">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars1.githubusercontent.com/u/5211594?s=460&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="谢志海的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">Git常用命令</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h3 id="忽略已经被提交的文件"><a href="#忽略已经被提交的文件" class="headerlink" title="忽略已经被提交的文件"></a><a href="https://segmentfault.com/q/1010000000430426" target="_blank" rel="noopener">忽略已经被提交的文件</a></h3><p>正确的做法应该是：<code>git rm --cached logs/xx.log</code>，然后更新 <code>.gitignore</code> 忽略掉目标文件，最后 <code>git commit -m &quot;We really don&#39;t want Git to track this anymore!&quot;</code></p>
-<h3 id="合并提交"><a href="#合并提交" class="headerlink" title="合并提交"></a>合并提交</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i 4287845</span><br></pre></td></tr></table></figure>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqj4weq6y7j30v606imy0.jpg" alt="1"></p>
-<ul>
-<li>不停选择用以前的提交来squash</li>
-<li>删掉旧分支</li>
-<li>相同名称命名新分支</li>
-<li>强制提交</li>
+          <h1 class="post-title" itemprop="name headline">以太坊研究5-测试期间bug</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T16:38:18+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>解决3个中心节点联通后，txpool并不同步。</li>
+<li>解决3个中心节点联通后，并不挖矿的情况。</li>
+<li>poa挖矿需要一半以上的节点签名才可运作。</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f origin master</span><br></pre></td></tr></table></figure>
+<p><strong>3个中心节点均联通，但不打包。</strong></p>
+<h4 id="txpool并不同步"><a href="#txpool并不同步" class="headerlink" title="txpool并不同步"></a>txpool并不同步</h4><p>出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。</p>
+<p>解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。</p>
+<h4 id="不挖矿"><a href="#不挖矿" class="headerlink" title="不挖矿"></a>不挖矿</h4><p>出现原因：unlock account  与 etherbase account不一致。</p>
+<p>解决方法：</p>
+<ul>
+<li>miner.setEtherbase(address)</li>
+<li>geth –etherbase ‘someaddress’</li>
+</ul>
 
-        
-      </div>
-      
-      
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/24/以太坊研究4-极限性能测试/" rel="next" title="以太坊研究4-极限性能测试">
+                <i class="fa fa-chevron-left"></i> 以太坊研究4-极限性能测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/16/Web-Sticky-Footer/" rel="prev" title="Web-Sticky Footer(zt)">
+                Web-Sticky Footer(zt) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -417,7 +534,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#忽略已经被提交的文件"><span class="nav-number">1.</span> <span class="nav-text">忽略已经被提交的文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并提交"><span class="nav-number">2.</span> <span class="nav-text">合并提交</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#txpool并不同步"><span class="nav-number">1.0.1.</span> <span class="nav-text">txpool并不同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不挖矿"><span class="nav-number">1.0.2.</span> <span class="nav-text">不挖矿</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
