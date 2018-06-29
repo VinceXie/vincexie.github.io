@@ -242,7 +242,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Nodejs-时间处理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/16/Web-Sticky-Footer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -261,7 +261,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/16/Nodejs-时间处理/" itemprop="url">Nodejs-时间处理</a></h1>
+                <a class="post-title-link" href="/2018/05/16/Web-Sticky-Footer/" itemprop="url">Web-Sticky Footer(zt)</a></h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:46:45+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-16T11:27:04+08:00">
+                2018-05-16
               </time>
             
 
@@ -313,16 +313,30 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>日期的生成与设置使用new Date()，网页上的显示使用moment。</p>
-<h4 id="获取今天和之后的信息"><a href="#获取今天和之后的信息" class="headerlink" title="获取今天和之后的信息"></a>获取今天和之后的信息</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  date.setHours(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  MessageProxy.getMessageAfterDate(&#123;&#125;,date,ep.done(<span class="function"><span class="keyword">function</span> (<span class="params">message</span>) </span>&#123;</span><br><span class="line">		res.send(message);</span><br><span class="line">	&#125;));</span><br><span class="line"><span class="comment">//数据库操作如下</span></span><br><span class="line">  Message.find(_.assign(data,&#123;<span class="attr">time</span>:&#123;<span class="attr">$gte</span>:date&#125;&#125;),<span class="literal">null</span>,&#123;<span class="attr">sort</span>:&#123;<span class="attr">time</span>:<span class="number">1</span>&#125;&#125;,callback)</span><br></pre></td></tr></table></figure>
-<h4 id="从Date那里获取24进制时间"><a href="#从Date那里获取24进制时间" class="headerlink" title="从Date那里获取24进制时间"></a>从Date那里获取24进制时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(item.time).toLocaleTimeString(<span class="string">'en-US'</span>, &#123; <span class="attr">hour12</span>: <span class="literal">false</span>,</span><br><span class="line">          hour: <span class="string">"numeric"</span>,</span><br><span class="line">          minute: <span class="string">"numeric"</span>&#125;);</span><br></pre></td></tr></table></figure>
-<h4 id="拼接Date时间"><a href="#拼接Date时间" class="headerlink" title="拼接Date时间"></a>拼接Date时间</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span>(<span class="keyword">this</span>.date+<span class="string">' '</span>+<span class="keyword">this</span>.time)</span><br></pre></td></tr></table></figure>
-<h3 id="moment的使用"><a href="#moment的使用" class="headerlink" title="moment的使用"></a><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment的使用</a></h3><p>日期显示</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).calendar()</span><br></pre></td></tr></table></figure>
-<p>24小时显示</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment(data.value).format(<span class="string">'a HH:mm'</span>)</span><br></pre></td></tr></table></figure>
-<p>增加一天</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">moment().add(<span class="number">1</span>,<span class="string">'days'</span>).format(<span class="string">"MMMDo"</span>)</span><br></pre></td></tr></table></figure>
+            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>做过网页开发的同学想必都遇到过这样尴尬的排版问题：<br>在主体内容不足够多或者未完全加载出来之前，就会导致出现（图一）的这种情况，原因是因为没有足够的垂直空间使得页脚推到浏览器窗口最底部。但是，我们期望的效果是页脚应该一直处于页面最底部（如图二）：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNc79gy1frd0qh05lhj31880qtgll.jpg" alt="img"></p>
+<p>笔者最近在项目中也遇到过这样的场景，在寻找最佳解决方案的过程中，了解到了 “Sticky Footer” 这个名词。<br>本文将带大家重新认识这个常见的网页效果，以及一些可行的实现方案。</p>
+<h2 id="什么是-“Sticky-Footer”"><a href="#什么是-“Sticky-Footer”" class="headerlink" title="什么是 “Sticky Footer”"></a>什么是 “Sticky Footer”</h2><p>所谓 “Sticky Footer”，并不是什么新的前端概念和技术，它指的就是一种网页效果：<br>如果页面内容不足够长时，页脚固定在浏览器窗口的底部；如果内容足够长时，页脚固定在页面的最底部。<br><strong>总而言之，就是页脚一直处于最底</strong>，效果大致如图所示：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1frd0qga0kcj31880so749.jpg" alt="img"></p>
+<p>当然，实现这种效果的方法有很多种，其中有通过脚本计算的，有通过 CSS 处理的，脚本计算的方案我们不在本文探讨。<br>下面我们看看有哪些通过 CSS 可以实现且适用于移动端开发的方案，并分析其中的利弊。</p>
+<h2 id="如何实现"><a href="#如何实现" class="headerlink" title="如何实现"></a>如何实现</h2><p>假设我们页面的 HTML 结构是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;wrapper&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;content&quot;&gt;&lt;!-- 页面主体内容区域 --&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;footer&quot;&gt;&lt;!-- 需要做到 Sticky Footer 效果的页脚 --&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="实现方案一：absolute"><a href="#实现方案一：absolute" class="headerlink" title="实现方案一：absolute"></a>实现方案一：absolute</h3><p>通过绝对定位处理应该是常见的方案，只要使得页脚一直定位在主容器预留占位位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    position: relative;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    padding-bottom: 50px;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    position: absolute;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方案需指定 html、body 100% 的高度，且 content 的 <code>padding-bottom</code> 需要与 footer 的 <code>height</code> 一致。</p>
+<h3 id="实现方案二：calc"><a href="#实现方案二：calc" class="headerlink" title="实现方案二：calc"></a>实现方案二：calc</h3><p>通过计算函数 calc 计算（视窗高度 - 页脚高度）赋予内容区最小高度，不需要任何额外样式处理，代码量最少、最简单。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.content &#123;</span><br><span class="line">    min-height: calc(100vh - 50px);</span><br><span class="line">&#125;</span><br><span class="line">.footer &#123;</span><br><span class="line">    height: 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果不需考虑 <code>calc()</code> 以及 <code>vh</code> 单位的兼容情况，这是个很理想的实现方案。<br>同样的问题是 footer 的高度值需要与 content 其中的计算值一致。</p>
+<h3 id="实现方案三：table"><a href="#实现方案三：table" class="headerlink" title="实现方案三：table"></a>实现方案三：table</h3><p>通过 table 属性使得页面以表格的形态呈现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">html, body &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.wrapper &#123;</span><br><span class="line">    display: table;</span><br><span class="line">    width: 100%;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    display: table-row;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，使用 table 方案存在一个比较常见的样式限制，通常 margin、padding、border 等属性会不符合预期。<br>笔者不建议使用这个方案。当然，问题也是可以解决的：别把其他样式写在 table 上。</p>
+<h3 id="实现方案四：Flexbox"><a href="#实现方案四：Flexbox" class="headerlink" title="实现方案四：Flexbox"></a>实现方案四：Flexbox</h3><p>Flexbox 是非常适合实现这种效果的，使用 Flexbox 实现不仅不需要任何额外的元素，而且允许页脚的高度是可变的。</p>
+<p>虽然大多数 Flexbox 布局常用于水平方向布局，但别忘了实际上它也可用于垂直布局，所以你需要做的是将垂直部分包装在一个 Flex 容器中，并选择要扩展的部分，他们将自动占用其容器中的所有可用空间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">html &#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">&#125;</span><br><span class="line">body &#123;</span><br><span class="line">    min-height: 100%;</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">&#125;</span><br><span class="line">.content &#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是想要兼容各种系统设备，需要兼顾 <code>flex</code> 的兼容写法。</p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>以上几种实现方案，笔者都在项目中尝试过，每个实现的方法其实大同小异，同时也都有自己的利弊。<br>其中有的方案存在限制性问题，需要固定页脚高度；其中有的方案需要添加额外的元素或者需要 Hack 手段。同学们可以根据页面具体需求，选择最适合的方案。</p>
+<p>当然，技术是不断更新的，也许还有很多不同的、更好的方案。但相信大家最终目都是一样的，为了更好的用户体验！</p>
+<p>参考资料：<br><a href="https://css-tricks.com/couple-takes-sticky-footer/" target="_blank" rel="noopener">https://css-tricks.com/couple-takes-sticky-footer/</a><br><a href="http://www.w3cplus.com/css3/css-secrets/sticky-footers.html" target="_blank" rel="noopener">http://www.w3cplus.com/css3/css-secrets/sticky-footers.html</a></p>
 
           
         
@@ -371,7 +385,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Vue优秀插件/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/以太坊研究5-测试期间bug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -390,7 +404,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/16/Vue优秀插件/" itemprop="url">Vue优秀插件</a></h1>
+                <a class="post-title-link" href="/2018/05/14/以太坊研究5-测试期间bug/" itemprop="url">以太坊研究5-测试期间bug</a></h1>
         
 
         <div class="post-meta">
@@ -402,8 +416,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T16:28:11+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T16:38:18+08:00">
+                2018-05-14
               </time>
             
 
@@ -442,28 +456,19 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>都是实际项目中亲测好用的插件。作用于<a href="http://www.yxzbb.com" target="_blank" rel="noopener">游戏直播吧</a>。</p>
-<ul>
-<li><p><a href="https://bootstrap-vue.js.org/docs" target="_blank" rel="noopener">bootstrap-vue</a></p>
-<p>整体的ui框架，可同时作用于手机端。</p>
-</li>
-<li><p><a href="https://github.com/troxler/vue-headful" target="_blank" rel="noopener">vue-headful</a></p>
-<p>设置标题、关键字等</p>
-</li>
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>解决3个中心节点联通后，txpool并不同步。</li>
+<li>解决3个中心节点联通后，并不挖矿的情况。</li>
+<li>poa挖矿需要一半以上的节点签名才可运作。</li>
 </ul>
+<p><strong>3个中心节点均联通，但不打包。</strong></p>
+<h4 id="txpool并不同步"><a href="#txpool并不同步" class="headerlink" title="txpool并不同步"></a>txpool并不同步</h4><p>出现原因：geth1与geth2不联通的情况下，各自接收到不同的交易。</p>
+<p>解决方法：关闭所有节点，重启所有节点可解决。如有数据要保留，保留最多交易的节点，重启其他节点。</p>
+<h4 id="不挖矿"><a href="#不挖矿" class="headerlink" title="不挖矿"></a>不挖矿</h4><p>出现原因：unlock account  与 etherbase account不一致。</p>
+<p>解决方法：</p>
 <ul>
-<li><p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie</a></p>
-<p>对cookie的操作。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-seesion</a></p>
-<p>用来存放本地信息，可存放用户登录态。</p>
-</li>
-<li><p><a href="https://www.npmjs.com/package/vue-notification" target="_blank" rel="noopener">vue-notification</a></p>
-<p>超级好用的通知插件，不支持填入信息，支持自动消失。</p>
-</li>
-<li><p><a href="http://momentjs.cn/" target="_blank" rel="noopener">moment.js</a></p>
-<p>用于时间处理以及显示。</p>
-</li>
+<li>miner.setEtherbase(address)</li>
+<li>geth –etherbase ‘someaddress’</li>
 </ul>
 
           
@@ -513,7 +518,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Web-登录模块流程(2)-Vue前端/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/以太坊研究4-极限性能测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="谢志海">
@@ -532,7 +537,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/16/Web-登录模块流程(2)-Vue前端/" itemprop="url">Web-登录模块流程(2)-Vue前端</a></h1>
+                <a class="post-title-link" href="/2018/04/24/以太坊研究4-极限性能测试/" itemprop="url">以太坊研究4-极限性能测试</a></h1>
         
 
         <div class="post-meta">
@@ -544,8 +549,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:44:19+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T14:41:52+08:00">
+                2018-04-24
               </time>
             
 
@@ -584,18 +589,41 @@
       
         
           
-            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>服务器根据cookie来判断登录状态，前端只要删除cookie就是退出登录，本文主要是本地删除cookie，服务器库的使用需先删除httpOnly标记，如服务器删除则只需加发送http请求。本地用户信息的存储为session。</p>
-<p><strong>通过请求删除cookie更安全</strong></p>
-<h3 id="服务端httpOnly设置"><a href="#服务端httpOnly设置" class="headerlink" title="服务端httpOnly设置"></a>服务端httpOnly设置</h3><p>app.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app.use(session(&#123;</span><br><span class="line">	secret: config.session_secret,</span><br><span class="line">	resave: <span class="literal">false</span>,</span><br><span class="line">	saveUninitialized: <span class="literal">false</span>,</span><br><span class="line">    cookie:&#123;</span><br><span class="line">        httpOnly:<span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;));</span><br></pre></td></tr></table></figure>
-<p>middlewares/auth.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen_session</span>(<span class="params">user, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> auth_token = user._id + <span class="string">'$$$$'</span>; <span class="comment">// 以后可能会存储更多信息，用 $$$$ 来分隔</span></span><br><span class="line">	<span class="keyword">var</span> opts = &#123;</span><br><span class="line">		path: <span class="string">'/'</span>,</span><br><span class="line">		<span class="comment">//1秒 &gt; 1分 &gt; 1小时 &gt; 1天 &gt; 1个月 有效期</span></span><br><span class="line">		maxAge: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">30</span>,</span><br><span class="line">		signed: <span class="literal">true</span>,</span><br><span class="line">		httpOnly: <span class="literal">false</span></span><br><span class="line">	&#125;;</span><br><span class="line">	res.cookie(config.auth_cookie_name, auth_token, opts); <span class="comment">//cookie 有效期30天</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用vue-session和vue-cookie"><a href="#使用vue-session和vue-cookie" class="headerlink" title="使用vue-session和vue-cookie"></a>使用vue-session和vue-cookie</h3><p>使用vue-session记录信息和vue-cookie删除cookie</p>
-<p><a href="https://www.npmjs.com/package/vue-session" target="_blank" rel="noopener">vue-session官方文档</a></p>
-<p><a href="https://www.npmjs.com/package/vue-cookie" target="_blank" rel="noopener">vue-cookie官方文档</a></p>
-<h4 id="检查登录"><a href="#检查登录" class="headerlink" title="检查登录"></a>检查登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">checkLogin()&#123;</span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">this</span>.$session.get(<span class="string">'user'</span>))&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = <span class="keyword">this</span>.$session.get(<span class="string">'user'</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.isLogin = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">this</span>.user = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<h4 id="登录或注册成功后"><a href="#登录或注册成功后" class="headerlink" title="登录或注册成功后"></a>登录或注册成功后</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">that.$session.set(<span class="string">'user'</span>,res.body)</span><br></pre></td></tr></table></figure>
-<h4 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">logout ()&#123;</span><br><span class="line">  <span class="keyword">this</span>.$session.destroy();</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'server'</span>);</span><br><span class="line">  <span class="keyword">this</span>.$cookie.delete(<span class="string">'connect.sid'</span>);</span><br><span class="line">  <span class="keyword">this</span>.checkLogin();</span><br><span class="line">  <span class="keyword">this</span>.$notify(&#123;</span><br><span class="line">    type: <span class="string">'success'</span>,</span><br><span class="line">    title: <span class="string">'已经退出'</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>上一篇文章测试了原有的5秒一区块3中心点测试链的极限性能。这次测试实时打包区块链的极限性能。</p>
+<h4 id="生成新的链"><a href="#生成新的链" class="headerlink" title="生成新的链"></a>生成新的链</h4><p>测试前在社区问了一下相关问题，得到答案是区块链生成后不可以在原链更改生成时间，因此只能新建测试链进行测试。并且，可以设置生成时间为0，就是收到数据后会立刻打包，不用等时间到。</p>
+<p>相关问题：<a href="https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain" target="_blank" rel="noopener">https://ethereum.stackexchange.com/questions/46453/how-to-change-block-generation-period-in-poa-private-ethereum-blockchain</a></p>
+<p>genesis.json改周期，保存为genesis0.json</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">"clique": &#123;</span><br><span class="line">      "period": 0,</span><br><span class="line">      "epoch": 30000</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>生成数据目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#geth --datadir /root/node0 init genesis.json</span></span><br><span class="line">docker run  --rm --net=host -v /root:/root ethereum/client-go --datadir /root/ethereum/node4 init /root/ethereum/genesis0.json</span><br></pre></td></tr></table></figure>
+<p>复制旧账户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp ./node0/keystore/* ./node4/keystore</span><br><span class="line">cp ./node1/keystore/* ./node5/keystore</span><br><span class="line">cp ./node2/keystore/* ./node6/keystore</span><br></pre></td></tr></table></figure>
+<h4 id="启动新zero链"><a href="#启动新zero链" class="headerlink" title="启动新zero链"></a>启动新zero链</h4><p>旧链为geth1，geth2，geth3。新链为geth4。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth4  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10004 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node4 --port 30004 --nodiscover --unlock <span class="string">"0x5027bda4349b1f0c415af154a5e15a659d444b67,0x97F4FDB4b2393ba235a22b31e446e6DCd127d855,0x775e2741cDf53C0eAf1Cf46edEd6Ba9fc5D5791b"</span> --password /root/ethereum/password.txt --fast --cache=256 console</span><br></pre></td></tr></table></figure>
+<p>开启挖矿等待</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79gy1fqntil6f51j316g05iwgb.jpg" alt="5"></p>
+<p>获取enode后继续开启geth5、geth6</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth5  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10005 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node5 --port 30005 --nodiscover --unlock 0xf867019806b730c7d338c92375bfb7560e0e6b59 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004 console</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name geth6  -v /root:/root -it --restart=always --net=host ethereum/client-go  --rpc --rpcaddr 0.0.0.0 --rpcport 10006 --rpcapi admin,db,debug,eth,miner,net,shh,personal,shh,txpool,web3 --datadir /root/ethereum/node6 --port 30006 --nodiscover --unlock 0x00296b16cac6036f176b54a29853a6adbf67ee19 --password /root/ethereum/password.txt --fast --cache=256 --bootnodes <span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span> console</span><br></pre></td></tr></table></figure>
+<p>节点连接失败，手动添加</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://85324e755a99572afb42ee46647476ee8aa1ed887f4a2723e0e661f9c58672821aa2a1d886852d9bcca92d38ccef6c53fb1bebafb1fbcaad9d6b90d3bad2316e@119.29.226.45:30004"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="测试开始"><a href="#测试开始" class="headerlink" title="测试开始"></a>测试开始</h3><h4 id="出错"><a href="#出错" class="headerlink" title="出错"></a>出错</h4><p>一开始就开始出错，geth4、5已经挖矿到1671，geth6停留在1090。</p>
+<p>geth4、geth5</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnuk7pzzrj318c05iwhd.jpg" alt="geth4"></p>
+<p>geth6</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79gy1fqnvtnlxezj317e046tau.jpg" alt="geth6"></p>
+<p><strong>出错分析</strong></p>
+<p>一开始就开始出错，因为采用实时挖矿，非轮流挖矿，如大量交易提交给区块链网络，geth4、geth5、geth6都会同时进行挖矿。我们geth5、geth6，都只跟geth4链接，当出现分叉时，geth6跟geth4都保留自己的链，而没有放弃自己的链。</p>
+<p><strong>解决方法</strong></p>
+<p>geth6与geth5也联通，当有两个节点都在1671时，自动放弃自己的分叉，跟上主链。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin.addPeer(<span class="string">"enode://b5de2120a829d201d65a7bb85804973590f818e3c0991d8499f2d47dd6c6a1e45786f9f04247bca0743f38f7006e48054146d6ab82156a6e03cb104f7630022e@127.0.0.1:30005?discport=0"</span>)</span><br></pre></td></tr></table></figure>
+<p>跟上主链</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvtta7f0j31kw0iiwvf.jpg" alt="zhulian"></p>
+<h3 id="极限情况"><a href="#极限情况" class="headerlink" title="极限情况"></a>极限情况</h3><p>cpu使用</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79gy1fqnvmr4wllj30w203ugmx.jpg" alt="321"></p>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>向一个节点提交交易的话，该节点会承担大部分的打包工作，打包极限为225/区块，其他节点该时的打包数约为75/节点。</p>
+<p>从09:02:34开始发送第一笔交易，发送到4314笔时产生堵塞，时间为09:03:05。到09:03:13时恢复交易。通过计算可得出</p>
+<p><strong>3中心的实时链向同一节点发送交易，交易计算峰值为140笔/秒，平均峰值为110笔/秒，如分散提交交易峰值可更高。</strong></p>
 
           
         
@@ -635,7 +663,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -685,7 +713,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
